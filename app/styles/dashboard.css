@@ -1,0 +1,10 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 225px 1fr;
+}
+
+.dashboard__page {
+  width: min(95%, 750px);
+  padding: 1.5rem;
+  padding-top: 20px;
+}

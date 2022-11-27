@@ -1,0 +1,65 @@
+:root {
+  --button-color: #fff;
+  --lesson-card-background: #fff;
+  --track-card-background: #fff;
+  --icon-color: hsl(213, 42%, 5%);
+  --overlay-color: hsla(213, 50%, 50%, 0.075);
+
+  --primary-base-hue: 213;
+  --accent-base-hue: 185;
+  --grey-base-hue: 213;
+  --error-base-hue: 0;
+  --success-base-hue: 120;
+
+  --grey100: hsl(var(--grey-base-hue), 21%, 97%);
+  --grey200: hsl(var(--grey-base-hue), 18%, 89%);
+  --grey300: hsl(var(--grey-base-hue), 16%, 80%);
+  --grey400: hsl(var(--grey-base-hue), 16%, 67%);
+  --grey500: hsl(var(--grey-base-hue), 15%, 60%);
+  --grey600: hsl(var(--grey-base-hue), 14%, 50%);
+  --grey700: hsl(var(--grey-base-hue), 13%, 44%);
+  --grey800: hsl(var(--grey-base-hue), 15%, 34%);
+  --grey900: hsl(var(--grey-base-hue), 15%, 28%);
+
+  --primary100: hsl(var(--primary-base-hue), 70%, 95%);
+  --primary200: hsl(var(--primary-base-hue), 60%, 86%);
+  --primary300: hsl(var(--primary-base-hue), 63%, 72%);
+  --primary400: hsl(var(--primary-base-hue), 63%, 61%);
+  --primary500: hsl(var(--primary-base-hue), 63%, 50%);
+  --primary600: hsl(var(--primary-base-hue), 63%, 42%);
+  --primary700: hsl(var(--primary-base-hue), 63%, 31%);
+  --primary800: hsl(var(--primary-base-hue), 63%, 21%);
+  --primary900: hsl(var(--primary-base-hue), 63%, 15%);
+
+  --accent100: hsl(var(--accent-base-hue), 70%, 95%);
+  --accent200: hsl(var(--accent-base-hue), 60%, 82%);
+  --accent300: hsl(var(--accent-base-hue), 50%, 72%);
+  --accent400: hsl(var(--accent-base-hue), 50%, 61%);
+  --accent500: hsl(var(--accent-base-hue), 50%, 50%);
+  --accent600: hsl(var(--accent-base-hue), 50%, 42%);
+  --accent700: hsl(var(--accent-base-hue), 50%, 34%);
+  --accent800: hsl(var(--accent-base-hue), 50%, 21%);
+  --accent900: hsl(var(--accent-base-hue), 50%, 14%);
+
+  --error100: hsl(var(--error-base-hue), 70%, 95%);
+  --error200: hsl(var(--error-base-hue), 70%, 82%);
+  --error300: hsl(var(--error-base-hue), 60%, 72%);
+  --error400: hsl(var(--error-base-hue), 60%, 61%);
+  --error500: hsl(var(--error-base-hue), 60%, 50%);
+  --error600: hsl(var(--error-base-hue), 60%, 42%);
+  --error700: hsl(var(--error-base-hue), 60%, 34%);
+  --error800: hsl(var(--error-base-hue), 60%, 21%);
+  --error900: hsl(var(--error-base-hue), 60%, 14%);
+
+  --success100: hsl(var(--success-base-hue), 70%, 93%);
+  --success200: hsl(var(--success-base-hue), 70%, 82%);
+  --success300: hsl(var(--success-base-hue), 70%, 72%);
+  --success400: hsl(var(--success-base-hue), 70%, 61%);
+  --success500: hsl(var(--success-base-hue), 70%, 50%);
+  --success600: hsl(var(--success-base-hue), 70%, 42%);
+  --success700: hsl(var(--success-base-hue), 70%, 34%);
+  --success800: hsl(var(--success-base-hue), 70%, 21%);
+  --success900: hsl(var(--success-base-hue), 70%, 12%);
+
+  --input-border: var(--grey300);
+}

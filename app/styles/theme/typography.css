@@ -1,0 +1,14 @@
+:root {
+  --font-size: 14px;
+  --button-font-size: 14px;
+  --font-mini: 10px;
+  --font-tiny: 12px;
+  --font-small: 14px;
+  --font-normal: 16px;
+  --font-medium: 18px;
+  --font-large: 20px;
+  --font-extra-large: 24px;
+  --font-huge: 30px;
+  --font-jumbo: 36px;
+  --font-color: #333;
+}
