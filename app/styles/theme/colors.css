@@ -12,7 +12,7 @@
   --success-base-hue: 120;
 
   --grey100: hsl(var(--grey-base-hue), 21%, 97%);
-  --grey200: hsl(var(--grey-base-hue), 18%, 89%);
+  --grey200: hsl(var(--grey-base-hue), 18%, 93%);
   --grey300: hsl(var(--grey-base-hue), 16%, 80%);
   --grey400: hsl(var(--grey-base-hue), 16%, 67%);
   --grey500: hsl(var(--grey-base-hue), 15%, 60%);

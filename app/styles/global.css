@@ -13,6 +13,7 @@ body {
   margin: 0;
   background: var(--grey200);
   font-size: var(--font-size);
+  line-height: 1.5;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -24,4 +25,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+input[type='checkbox'] {
+  accent-color: var(--primary600);
 }

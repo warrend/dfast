@@ -1,0 +1,11 @@
+.radio-party {
+}
+
+.radio-party__wrapper {
+  margin-bottom: var(--normal);
+}
+
+.radio-party__wrapper input {
+  margin-right: var(--small);
+  border: 1px solid red;
+}

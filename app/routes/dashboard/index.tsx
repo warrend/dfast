@@ -1,7 +1,7 @@
-import { json, type LoaderFunction } from '@remix-run/node';
-import { Outlet, useLoaderData } from '@remix-run/react';
+import { type LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import { getProjects, type Project } from '~/server/db.server';
-import { Navbar, links as navbarLinks } from '~/components/nav-bar';
+import { links as navbarLinks } from '~/components/nav-bar';
 import styles from '~/styles/dashboard.css';
 
 export const links = () => [
@@ -20,6 +20,5 @@ export default function Dashboard() {
 }
 
 export function ErrorBoundary({ error }: { error: any }) {
-  console.log({ error });
   return <div>Error happened</div>;
 }
