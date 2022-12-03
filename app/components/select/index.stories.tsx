@@ -18,7 +18,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   title: 'Status',
   name: 'status',
-  width: '325px',
+  width: '350px',
   selected: 'sent',
   config: [
     { value: 'unsent', label: 'Unsent' },

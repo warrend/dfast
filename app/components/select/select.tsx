@@ -13,10 +13,10 @@ export function Select({
   name: string;
   config: { value: string; label: string }[];
   selected: string;
-  width: string;
+  width?: string;
 }) {
   return (
-    <div className="select" style={{ width: width || '100%' }}>
+    <div className="select" style={{ width: width ? width : '100%' }}>
       <label htmlFor={name}>{title}</label>
       <div className="select__wrapper">
         <svg
