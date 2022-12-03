@@ -9,10 +9,10 @@ import { checkSessionCookie, getUserId } from './auth.server';
 export type Project = {
   id: string;
   category: string;
-  createdAt: Date;
+  createdAt: string;
   description: string;
   editor: { email: string; name: string };
-  history: { status: string; updatedAt: Date }[];
+  history: { status: string; updatedAt: string }[];
   publication: string;
   status: string;
   title: string;
