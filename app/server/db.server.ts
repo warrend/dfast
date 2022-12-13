@@ -5,6 +5,7 @@ import type {
 import { getFirestore } from 'firebase-admin/firestore';
 import { getSession } from '~/sessions';
 import { checkSessionCookie, getUserId } from './auth.server';
+import { type SUBMISSION_STATUSES } from '~/constants';
 
 export type Project = {
   id: string;
@@ -14,7 +15,7 @@ export type Project = {
   editor: { email: string; name: string };
   history: { status: string; updatedAt: string }[];
   publication: string;
-  status: string;
+  status: keyof typeof SUBMISSION_STATUSES;
   title: string;
 };
 
@@ -31,6 +32,7 @@ export function assignTypes<T extends object>() {
 
 export async function getProjects(request: Request) {
   const uid = await getUserId(request);
+  console.log({ uid });
 
   if (!uid) {
     throw new Error('Message');

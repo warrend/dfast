@@ -13,6 +13,8 @@
   background: white;
   border-radius: 4px;
   box-shadow: none;
+  background: white url('./icon.svg') no-repeat;
+  background-position: right var(--medium) top 50%;
 }
 
 .select select:focus {
@@ -21,13 +23,4 @@
 
 .select__wrapper {
   position: relative;
-}
-
-.select__select-icon {
-  top: 14px;
-  right: 16px;
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  color: var(--grey600);
 }

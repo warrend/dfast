@@ -1,10 +1,18 @@
 .dashboard {
+  margin-left: 225px;
+  margin-top: 45px;
+  /* display: grid;
+  grid-template-columns: 225px 1fr; */
+}
+
+.dashboard__fast-list {
   display: grid;
-  grid-template-columns: 225px 1fr;
+  grid-template-columns: repeat(auto-fit, 100px);
+  gap: var(--large);
 }
 
 .dashboard__page {
   width: min(95%, 750px);
-  padding: 1.5rem;
+  padding: var(--large);
   padding-top: 20px;
 }

@@ -1,5 +1,10 @@
 @import url('https://rsms.me/inter/inter.css');
+@import 'normalize.css/normalize.css';
 @import '../styles/theme/index.css';
+
+* {
+  box-sizing: border-box;
+}
 
 @supports (font-variation-settings: normal) {
   html {
@@ -29,4 +34,14 @@ a {
 
 input[type='checkbox'] {
   accent-color: var(--primary600);
+}
+
+h2 {
+  font-weight: 600;
+  font-size: var(--font-small);
+  letter-spacing: 1px;
+  color: var(--grey600);
+  margin-top: 0;
+  margin-bottom: var(--normal);
+  font-variant: small-caps;
 }

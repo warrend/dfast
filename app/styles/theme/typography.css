@@ -1,5 +1,5 @@
 :root {
-  --font-size: 14px;
+  --font-size: 16px;
   --button-font-size: 14px;
   --font-mini: 10px;
   --font-tiny: 12px;
@@ -10,5 +10,5 @@
   --font-extra-large: 24px;
   --font-huge: 30px;
   --font-jumbo: 36px;
-  --font-color: #333;
+  --font-color: #222;
 }

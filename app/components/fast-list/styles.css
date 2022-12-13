@@ -1,0 +1,29 @@
+.fast-list {
+}
+
+.fast-list__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  width: 100px;
+  height: 100px;
+  box-shadow: var(--shadow100);
+  border-radius: var(--tiny);
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.fast-list__box--selected {
+  border: 2px solid var(--primary400);
+  transition: 150ms;
+}
+
+.fast-list__name {
+  font-weight: 700;
+}
+
+.fast-list__icon {
+  margin-bottom: var(--tiny);
+}

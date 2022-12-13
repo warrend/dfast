@@ -1,6 +1,6 @@
 import styles from './styles.css';
 
-export const links = [{ rel: 'stylesheet', href: styles }];
+export const links = () => [{ rel: 'stylesheet', href: styles }];
 
 export function CircleIcon({
   icon,
