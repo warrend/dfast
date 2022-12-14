@@ -1,6 +1,6 @@
 import styles from './styles.css';
 
-export const links = [{ rel: 'stylesheet', href: styles }];
+export const links = () => [{ rel: 'stylesheet', href: styles }];
 
 type Props = {
   width: string;
@@ -9,6 +9,8 @@ type Props = {
   disabled: boolean;
   id: string;
   type: 'submit' | 'button';
+  secondary?: boolean;
+  onClick?: () => void;
 };
 
 export function Button({
@@ -18,10 +20,19 @@ export function Button({
   disabled = false,
   id,
   type = 'button',
+  secondary = false,
+  onClick,
 }: Props) {
   return (
-    <div style={{ width }} className="button__wrapper">
-      <button disabled={disabled} id={id} name={name} type={type}>
+    <div className="button__wrapper" style={{ width }}>
+      <button
+        disabled={disabled}
+        id={id}
+        name={name}
+        type={type}
+        className={`button__${secondary ? 'secondary' : 'standard'} `}
+        onClick={onClick}
+      >
         {label}
       </button>
     </div>

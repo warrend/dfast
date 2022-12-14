@@ -20,10 +20,12 @@ export const fastNameLabels = {
 };
 
 export const fastNameIcons: TFastNameIcons = {
-  [FastName.TWITTER]: <Twitter size={20} />,
-  [FastName.FACEBOOK]: <Facebook size={20} />,
-  [FastName.NEWS]: <NewspaperIcon height={20} width={20} />,
-  [FastName.EMAIL]: <AtSign size={20} />,
+  [FastName.TWITTER]: <Twitter size={20} className="icon-color" />,
+  [FastName.FACEBOOK]: <Facebook size={20} className="icon-color" />,
+  [FastName.NEWS]: (
+    <NewspaperIcon height={20} width={20} className="icon-color" />
+  ),
+  [FastName.EMAIL]: <AtSign size={20} className="icon-color" />,
 };
 
 const microFasts = {

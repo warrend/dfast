@@ -1,0 +1,37 @@
+:root {
+  --sidebar-width: 33%;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: calc(var(--sidebar-width) * -1);
+  width: var(--sidebar-width);
+  height: 100%;
+  padding: var(--medium);
+  z-index: 1000;
+  transition: right 125ms;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: var(--shadow100);
+}
+
+.sidebar__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: hsla(0, 0%, 98%, 0.5);
+  z-index: 900;
+}
+
+.sidebar--visible {
+  transition: right 125ms;
+  right: 0;
+}
+
+.sidebar__button-row {
+  display: flex;
+  align-items: flex-end;
+}

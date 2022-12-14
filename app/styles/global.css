@@ -45,3 +45,7 @@ h2 {
   margin-bottom: var(--normal);
   font-variant: small-caps;
 }
+
+.icon-color {
+  color: var(--grey800);
+}

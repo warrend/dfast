@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './styles.css';
 import { objectKeys } from '~/helpers';
 import { FastName, fastNameIcons, fastNameLabels } from '~/constants';
@@ -9,13 +8,18 @@ export const links = () => [
   { rel: 'stylesheet', href: styles },
 ];
 
-export function FastList() {
-  const [selectedFast, setSelectedFast] = useState<
-    null | keyof typeof fastNameLabels
-  >(null);
+type Props = {
+  selectedFast: null | keyof typeof fastNameLabels;
+  setSelectedFast: (arg: null | keyof typeof fastNameLabels) => void;
+};
 
+export function FastList({ selectedFast, setSelectedFast }: Props) {
   function handleFastSelect(id: keyof typeof FastName) {
-    setSelectedFast(FastName[id]);
+    if (FastName[id] === selectedFast) {
+      setSelectedFast(null);
+    } else {
+      setSelectedFast(FastName[id]);
+    }
   }
 
   return (
