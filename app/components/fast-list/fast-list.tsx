@@ -1,6 +1,6 @@
 import styles from './styles.css';
-import { objectKeys } from '~/helpers';
-import { FastName, fastNameIcons, fastNameLabels } from '~/constants';
+import { objectEntries } from '~/helpers';
+import { fastNameIcons, fasts, fastCategoryLabels } from '~/constants';
 import { CircleIcon, links as circleIconLinks } from '../circle-icon';
 
 export const links = () => [
@@ -9,37 +9,44 @@ export const links = () => [
 ];
 
 type Props = {
-  selectedFast: null | keyof typeof fastNameLabels;
-  setSelectedFast: (arg: null | keyof typeof fastNameLabels) => void;
+  selectedFast: null | keyof typeof fasts;
+  setSelectedFast: (arg: null | keyof typeof fasts) => void;
 };
 
 export function FastList({ selectedFast, setSelectedFast }: Props) {
-  function handleFastSelect(id: keyof typeof FastName) {
-    if (FastName[id] === selectedFast) {
+  function handleFastSelect(id: keyof typeof fasts) {
+    if (id === selectedFast) {
       setSelectedFast(null);
     } else {
-      setSelectedFast(FastName[id]);
+      setSelectedFast(id);
     }
   }
 
   return (
     <>
-      {objectKeys(FastName).map((fastId) => (
-        <div
-          key={fastId}
-          className={`fast-list__box ${
-            selectedFast === FastName[fastId] ? 'fast-list__box--selected' : ''
-          }`}
-          onClick={() => handleFastSelect(fastId)}
-        >
-          <div className="fast-list__icon">
-            <CircleIcon
-              icon={fastNameIcons[FastName[fastId]]}
-              backgroundColor="var(--primary200)"
-            />
-          </div>
-          <div className="fast-list__name">
-            {fastNameLabels[FastName[fastId]]}
+      {objectEntries(fasts).map(([fastId, fastList]) => (
+        <div key={fastId} className="fast-list">
+          <h3>{fastCategoryLabels[fastId]}</h3>
+          <div className="fast-list__group">
+            {objectEntries(fastList).map(([k, v]) => {
+              return (
+                <div
+                  key={k}
+                  className={`fast-list__box ${
+                    selectedFast === v ? 'fast-list__box--selected' : ''
+                  }`}
+                  onClick={() => handleFastSelect(v)}
+                >
+                  <div className="fast-list__icon">
+                    <CircleIcon
+                      icon={fastNameIcons[k]}
+                      backgroundColor="var(--primary200)"
+                    />
+                  </div>
+                  <div className="fast-list__name">{v}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

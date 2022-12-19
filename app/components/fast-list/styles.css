@@ -1,4 +1,11 @@
 .fast-list {
+  margin-bottom: var(--jumbo);
+}
+
+.fast-list__group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 100px);
+  gap: var(--large);
 }
 
 .fast-list__box {

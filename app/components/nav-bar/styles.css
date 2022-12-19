@@ -20,6 +20,10 @@
   margin-left: 1rem;
 }
 
+.navbar__inner {
+  margin-bottom: var(--medium);
+}
+
 .navbar__link:hover {
   border-color: var(--primary500);
 }

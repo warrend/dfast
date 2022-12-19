@@ -33,19 +33,21 @@ export function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar__wrapper">
-        <h2>Pages</h2>
+        <div className="navbar__inner">
+          <h2>Pages</h2>
 
-        {navLinks.map(({ link, name, icon }) => (
-          <NavLink
-            key={link}
-            to={link}
-            className="navbar__link"
-            style={({ isActive }) => (isActive ? activeStyle : {})}
-          >
-            <div className="">{icon}</div>
-            <div>{name}</div>
-          </NavLink>
-        ))}
+          {navLinks.map(({ link, name, icon }) => (
+            <NavLink
+              key={link}
+              to={link}
+              className="navbar__link"
+              style={({ isActive }) => (isActive ? activeStyle : {})}
+            >
+              <div className="">{icon}</div>
+              <div>{name}</div>
+            </NavLink>
+          ))}
+        </div>
         <div className="navbar__fast-wrapper">
           <h2>Fasts</h2>
           <div>Something here</div>

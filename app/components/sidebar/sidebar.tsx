@@ -1,3 +1,5 @@
+import { fastTypes, fastTypeLabels } from '~/constants';
+import { objectEntries } from '~/helpers';
 import { Button, links as buttonLinks } from '../button';
 import styles from './styles.css';
 
@@ -16,6 +18,16 @@ export function Sidebar({ visible, setVisible }: Props) {
     <>
       <div className={`sidebar ${visible && 'sidebar--visible'}`}>
         <h2>Fast Duration</h2>
+        {objectEntries(fastTypes).map(([fastType, value]) => (
+          <div key={fastType}>
+            <div>{fastTypeLabels[fastType]}</div>
+            <div>
+              {objectEntries(value).map(([k, v]) => (
+                <div key={k}>{v.label}</div>
+              ))}
+            </div>
+          </div>
+        ))}
         <div className="sidebar__button-row">
           <Button
             width="135px"

@@ -46,6 +46,16 @@ h2 {
   font-variant: small-caps;
 }
 
+h3 {
+  font-weight: 600;
+  font-size: var(--font-normal);
+  letter-spacing: 1px;
+  color: var(--grey900);
+  margin-top: 0;
+  margin-bottom: var(--normal);
+  font-variant: small-caps;
+}
+
 .icon-color {
   color: var(--grey800);
 }

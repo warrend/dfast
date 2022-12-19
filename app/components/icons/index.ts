@@ -1,0 +1,9 @@
+export { Tiktok } from './tiktok-icon';
+export { Snapchat } from './snapchat-icon';
+export { Reddit } from './reddit-icon';
+export { Whatsapp } from './whatapp-icon';
+export { Telegram } from './telegram-icon';
+export { Uber } from './uber-icon';
+export { UberEats } from './uber-eats-icon';
+export { Lyft } from './lyft-icon';
+export { Doordash } from './doordash-icon';

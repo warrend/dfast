@@ -1,14 +1,6 @@
 .dashboard {
-  margin-left: 225px;
+  margin-left: 250px;
   margin-top: 45px;
-  /* display: grid;
-  grid-template-columns: 225px 1fr; */
-}
-
-.dashboard__fast-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 100px);
-  gap: var(--large);
 }
 
 .dashboard__page {
