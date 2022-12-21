@@ -33,14 +33,14 @@ export function FastList({ selectedFast, setSelectedFast }: Props) {
                 <div
                   key={k}
                   className={`fast-list__box ${
-                    selectedFast === v ? 'fast-list__box--selected' : ''
+                    selectedFast === k ? 'fast-list__box--selected' : ''
                   }`}
-                  onClick={() => handleFastSelect(v)}
+                  onClick={() => handleFastSelect(k)}
                 >
                   <div className="fast-list__icon">
                     <CircleIcon
                       icon={fastNameIcons[k]}
-                      backgroundColor="var(--primary200)"
+                      backgroundColor="var(--primary100)"
                     />
                   </div>
                   <div className="fast-list__name">{v}</div>

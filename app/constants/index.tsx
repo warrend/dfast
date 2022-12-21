@@ -25,8 +25,6 @@ import {
   Doordash,
 } from '~/components/icons';
 
-// steam, reddit, whatsapp, telegram, tiktok, uber, uber eats, lyft, doordash
-
 type TFastTypeLabels = {
   [key in keyof typeof fastTypes]: string;
 };
@@ -146,21 +144,42 @@ type TFastType = {
 };
 
 const micro: TFastType = {
-  micro15: { label: 'Micro • 15m', duration: 15 * 60 * 1000 },
-  micro30: { label: 'Micro • 30m', duration: 30 * 60 * 1000 },
-  micro45: { label: 'Micro • 45m', duration: 45 * 60 * 1000 },
+  micro15: { label: 'Micro • 15m', duration: 15 },
+  micro30: { label: 'Micro • 30m', duration: 30 },
+  micro45: { label: 'Micro • 45m', duration: 45 },
 };
 
 const quick: TFastType = {
-  quick60: { label: 'Quick • 60m', duration: 60 * 60 * 1000 },
+  quick1: { label: 'Quick • 1h', duration: 1 * 60 },
+  quick2: { label: 'Quick • 2h', duration: 2 * 60 },
+  quick4: { label: 'Quick • 4h', duration: 4 * 60 },
+  quick8: { label: 'Quick • 8h', duration: 8 * 60 },
+};
+
+const long: TFastType = {
+  long10: { label: 'Long • 10h', duration: 10 * 60 },
+  long12: { label: 'Long • 12h', duration: 12 * 60 },
+  long16: { label: 'Long • 16h', duration: 16 * 60 },
+  long18: { label: 'Long • 18h', duration: 18 * 60 },
+};
+
+const extended: TFastType = {
+  extended1: { label: 'Extended • 24h', duration: 24 * 60 },
+  extended2: { label: 'Extended • 48h', duration: 48 * 60 },
+  extended3: { label: 'Extended • 72h', duration: 72 * 60 },
+  extended7: { label: 'Extended • 1 week', duration: 168 * 60 },
 };
 
 export const fastTypeLabels: TFastTypeLabels = {
   micro: 'Micro Fasts',
   quick: 'Quick Fasts',
+  long: 'Long Fasts',
+  extended: 'Extended Fasts',
 };
 
 export const fastTypes = {
   micro,
   quick,
+  long,
+  extended,
 } as const;

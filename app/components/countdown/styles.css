@@ -1,0 +1,26 @@
+.countdown__ticker {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  color: var(--accent700);
+  font-family: 'Copse', serif;
+}
+
+.countdown__ticker-section {
+  display: grid;
+  grid-template-columns: 1em 0.6em;
+}
+
+.countdown__ticker-section > div:first-child {
+  justify-self: center;
+}
+
+.countdown__ticker-section > div:last-child {
+  justify-self: center;
+}
+
+.countdown__completed {
+  font-size: 14px;
+  color: var(--success600);
+  letter-spacing: 0.5px;
+}

@@ -2,8 +2,12 @@ import { NavLink } from '@remix-run/react';
 import { HomeIcon } from '@heroicons/react/24/outline';
 import styles from './styles.css';
 import { type ActionFunction } from '@remix-run/node';
+import { Countdown, links as countdownLinks } from '../countdown';
 
-export const links = () => [{ rel: 'stylesheet', href: styles }];
+export const links = () => [
+  ...countdownLinks(),
+  { rel: 'stylesheet', href: styles },
+];
 
 export const action: ActionFunction = async ({ request }) => {
   // return signOut(request);
@@ -50,8 +54,8 @@ export function Navbar() {
         </div>
         <div className="navbar__fast-wrapper">
           <h2>Fasts</h2>
-          <div>Something here</div>
-          <div>Somthing here</div>
+          <Countdown fastEndISODate="2022-12-20T20:46:08.583Z" />
+          <Countdown fastEndISODate="2022-12-20T23:42:08.883Z" />
         </div>
       </div>
     </div>

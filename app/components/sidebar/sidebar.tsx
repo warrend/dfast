@@ -20,7 +20,7 @@ export function Sidebar({ visible, setVisible }: Props) {
         <h2>Fast Duration</h2>
         {objectEntries(fastTypes).map(([fastType, value]) => (
           <div key={fastType}>
-            <div>{fastTypeLabels[fastType]}</div>
+            <h3>{fastTypeLabels[fastType]}</h3>
             <div>
               {objectEntries(value).map(([k, v]) => (
                 <div key={k}>{v.label}</div>

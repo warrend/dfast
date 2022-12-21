@@ -21,7 +21,8 @@
   --grey800: hsl(var(--grey-base-hue), 15%, 34%);
   --grey900: hsl(var(--grey-base-hue), 15%, 28%);
 
-  --primary100: hsl(var(--primary-base-hue), 97%, 95%);
+  --primary50: hsl(var(--primary-base-hue), 97%, 98%);
+  --primary100: hsl(var(--primary-base-hue), 97%, 92%);
   --primary200: hsl(var(--primary-base-hue), 90%, 86%);
   --primary300: hsl(var(--primary-base-hue), 90%, 72%);
   --primary400: hsl(var(--primary-base-hue), 90%, 61%);
