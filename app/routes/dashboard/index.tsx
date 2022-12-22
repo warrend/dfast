@@ -4,7 +4,7 @@ import { useLoaderData } from '@remix-run/react';
 import { FastList, links as fastListLinks } from '~/components/fast-list';
 import { Sidebar, links as sidebarLinks } from '~/components/sidebar';
 import styles from '~/styles/dashboard.css';
-import { type fasts } from '~/constants';
+import { type allFastNames } from '~/constants';
 
 export const links = () => [
   ...fastListLinks(),
@@ -23,11 +23,10 @@ function addMinutesToStartDate(min: number, isoDate: string) {
 }
 
 export default function Dashboard() {
-  const [selectedFast, setSelectedFast] = useState<null | keyof typeof fasts>(
-    null
-  );
+  const [selectedFast, setSelectedFast] = useState<
+    null | keyof typeof allFastNames
+  >('email');
 
-  console.log({ selectedFast });
   // const data = useLoaderData<TProject[]>();
 
   return (

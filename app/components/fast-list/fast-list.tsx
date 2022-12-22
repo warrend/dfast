@@ -1,6 +1,11 @@
 import styles from './styles.css';
 import { objectEntries } from '~/helpers';
-import { fastNameIcons, fasts, fastCategoryLabels } from '~/constants';
+import {
+  fastNameIcons,
+  fasts,
+  fastCategoryLabels,
+  type allFastNames,
+} from '~/constants';
 import { CircleIcon, links as circleIconLinks } from '../circle-icon';
 
 export const links = () => [
@@ -9,12 +14,12 @@ export const links = () => [
 ];
 
 type Props = {
-  selectedFast: null | keyof typeof fasts;
-  setSelectedFast: (arg: null | keyof typeof fasts) => void;
+  selectedFast: null | keyof typeof allFastNames;
+  setSelectedFast: (arg: null | keyof typeof allFastNames) => void;
 };
 
 export function FastList({ selectedFast, setSelectedFast }: Props) {
-  function handleFastSelect(id: keyof typeof fasts) {
+  function handleFastSelect(id: keyof typeof allFastNames) {
     if (id === selectedFast) {
       setSelectedFast(null);
     } else {

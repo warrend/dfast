@@ -1,5 +1,5 @@
 :root {
-  --sidebar-width: 33%;
+  --sidebar-width: 40%;
 }
 
 .sidebar {
@@ -8,7 +8,7 @@
   right: calc(var(--sidebar-width) * -1);
   width: var(--sidebar-width);
   height: 100%;
-  padding: var(--medium);
+  padding: var(--large);
   z-index: 1000;
   transition: right 125ms;
   overflow-y: auto;
@@ -29,6 +29,46 @@
 .sidebar--visible {
   transition: right 125ms;
   right: 0;
+}
+
+.sidebar__fast-group-chip {
+  display: inline-flex;
+  padding: var(--small) var(--medium);
+  background-color: var(--accent100);
+  font-size: var(--font-small);
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--small);
+  margin-right: var(--small);
+  margin-bottom: var(--small);
+  box-shadow: var(--shadow100);
+  cursor: pointer;
+  transition: background 150ms;
+}
+
+.sidebar__fast-type-wrapper {
+}
+
+.sidebar__fast-type-group {
+  margin: var(--large) 0;
+  /* padding: var(--small);
+  background: var(--grey100); */
+}
+
+.sidebar__fast-type {
+  display: inline-flex;
+  padding: var(--small) var(--medium);
+  margin-right: var(--small);
+  margin-bottom: var(--small);
+  box-shadow: var(--shadow100);
+  background: var(--grey100);
+  cursor: pointer;
+  transition: background 150ms;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--small);
 }
 
 .sidebar__button-row {

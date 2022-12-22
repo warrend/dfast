@@ -86,7 +86,7 @@ export const fasts = {
   general: generalFast,
 } as const;
 
-const allFastNames = {
+export const allFastNames = {
   ...socialFast,
   ...generalFast,
   ...foodServiceFast,
@@ -144,9 +144,9 @@ type TFastType = {
 };
 
 const micro: TFastType = {
-  micro15: { label: 'Micro • 15m', duration: 15 },
-  micro30: { label: 'Micro • 30m', duration: 30 },
-  micro45: { label: 'Micro • 45m', duration: 45 },
+  micro15: { label: '15m', duration: 15 },
+  micro30: { label: '30m', duration: 30 },
+  micro45: { label: '45m', duration: 45 },
 };
 
 const quick: TFastType = {
