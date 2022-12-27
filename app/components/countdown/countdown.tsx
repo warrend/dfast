@@ -18,6 +18,7 @@ export function Countdown({
     if (timeRemaining <= 0) {
       return;
     }
+
     const intervalId = setInterval(() => {
       setTimeRemaining((prevTimeRemaining) => prevTimeRemaining - 1);
     }, 1000);

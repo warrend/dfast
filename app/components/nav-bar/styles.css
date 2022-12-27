@@ -44,3 +44,13 @@
   place-content: center;
   margin-right: var(--small);
 }
+
+.navbar__current-fast {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--normal);
+}
+
+.navbar__circle-wrapper {
+  margin-right: var(--normal);
+}

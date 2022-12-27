@@ -177,6 +177,13 @@ export const fastTypeLabels: TFastTypeLabels = {
   extended: 'Extended Fasts',
 };
 
+export const allFastTypes = {
+  ...micro,
+  ...quick,
+  ...long,
+  ...extended,
+};
+
 export const fastTypes = {
   micro,
   quick,

@@ -2,21 +2,21 @@ import type {
   DocumentData,
   QueryDocumentSnapshot,
 } from 'firebase-admin/firestore';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getSession } from '~/sessions';
 import { checkSessionCookie, getUserId } from './auth.server';
-import { type SUBMISSION_STATUSES } from '~/constants';
+import { type allFastNames, type allFastTypes } from '~/constants';
+import { json } from '@remix-run/node';
 
-export type Project = {
+export type TStatus = 'in-progress' | 'completed';
+
+export type Fast = {
   id: string;
-  category: string;
-  createdAt: string;
-  description: string;
-  editor: { email: string; name: string };
-  history: { status: string; updatedAt: string }[];
-  publication: string;
-  status: keyof typeof SUBMISSION_STATUSES;
-  title: string;
+  start: string;
+  end: string;
+  status: TStatus;
+  typeId: keyof typeof allFastNames;
+  nameId: keyof typeof allFastTypes;
 };
 
 export function assignTypes<T extends object>() {
@@ -30,32 +30,64 @@ export function assignTypes<T extends object>() {
   };
 }
 
-export async function getProjects(request: Request) {
+export async function getCurrentFasts(request: Request) {
   const uid = await getUserId(request);
   console.log({ uid });
 
-  if (!uid) {
-    throw new Error('Message');
+  try {
+    const userRef = getFirestore().collection('users').doc(uid!);
+    const userSnapshot = await userRef.get();
+    const user = userSnapshot.data();
+
+    const current = user?.current || [];
+    console.log({ current });
+
+    return current;
+  } catch (error) {
+    return json({ status: 500 });
   }
-  const col = getFirestore()
-    .collection(`users/${uid}/projects`)
-    .withConverter(assignTypes<Project>());
-
-  const data = await col.get();
-
-  if (data.size === 0) {
-    throw new Error('collection does not exit');
-  }
-
-  const projects = data.docs.map((doc) => doc.data());
-  console.log({ projects });
-  return projects;
 }
-// export const addTodo = async (uid: string, title: string) => {
-//   const newTodoRef = db.userTodos(uid).doc();
-//   await newTodoRef.set({ title, id: newTodoRef.id });
-// };
 
-// export const removeTodo = async (uid: string, todoId: string) => {
-//   await db.userTodos(uid).doc(todoId).delete();
-// };
+export async function getFasts(request: Request) {
+  const uid = await getUserId(request);
+
+  try {
+    const fastsRef = getFirestore()
+      .collection(`users/${uid}/fasts`)
+      .withConverter(assignTypes<Fast>());
+
+    const data = await fastsRef.get();
+
+    const fasts = data.docs.map((doc) => doc.data());
+    return fasts;
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+async function addFastToCurrentFasts(data: any, uid: string) {
+  try {
+    const currentFastsRef = getFirestore().collection('users').doc(uid);
+    await currentFastsRef.update({
+      current: FieldValue.arrayUnion(data),
+    });
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+
+export async function createFast(request: Request, data: any) {
+  try {
+    const uid = await getUserId(request);
+    const fastsRef = getFirestore()
+      .collection(`users/${uid}/fasts`)
+      .withConverter(assignTypes<Fast>());
+
+    const createdFast = await fastsRef.add(data);
+    const updatedData = { id: createdFast.id, ...data };
+    await addFastToCurrentFasts(updatedData, uid!);
+
+    return json({ status: 200 });
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}

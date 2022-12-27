@@ -1,8 +1,11 @@
-import { NavLink } from '@remix-run/react';
+import { NavLink, useLoaderData } from '@remix-run/react';
 import { HomeIcon } from '@heroicons/react/24/outline';
 import styles from './styles.css';
-import { type ActionFunction } from '@remix-run/node';
+import { type LoaderFunction, type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
+import { Fast, getCurrentFasts } from '~/server/db.server';
+import { CircleIcon } from '../circle-icon';
+import { fastNameIcons } from '~/constants';
 
 export const links = () => [
   ...countdownLinks(),
@@ -33,7 +36,7 @@ const activeStyle = {
   borderColor: 'var(--primary500)',
 };
 
-export function Navbar() {
+export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
   return (
     <div className="navbar">
       <div className="navbar__wrapper">
@@ -54,8 +57,17 @@ export function Navbar() {
         </div>
         <div className="navbar__fast-wrapper">
           <h2>Fasts</h2>
-          <Countdown fastEndISODate="2022-12-20T20:46:08.583Z" />
-          <Countdown fastEndISODate="2022-12-20T23:42:08.883Z" />
+          {currentFasts?.map(({ end, id, nameId }) => (
+            <div key={id} className="navbar__current-fast">
+              <div className="navbar__circle-wrapper">
+                <CircleIcon
+                  backgroundColor="var(--accent100)"
+                  icon={fastNameIcons[nameId as keyof typeof fastNameIcons]}
+                />
+              </div>
+              <Countdown fastEndISODate={end} />
+            </div>
+          ))}
         </div>
       </div>
     </div>

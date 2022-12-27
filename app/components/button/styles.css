@@ -19,6 +19,17 @@
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 
+.button__wrapper .button__standard:disabled {
+  background: var(--grey100);
+  color: var(--grey400);
+  cursor: default;
+}
+
+.button__wrapper .button__standard:disabled:hover {
+  background: var(--grey100);
+  color: var(--grey400);
+}
+
 .button__wrapper .button__secondary {
   font-variant: small-caps;
   letter-spacing: 1.5px;
@@ -38,6 +49,14 @@
   line-height: 26px;
   box-shadow: none;
   width: 100%;
+}
+
+.button__wrapper .button__secondary:disabled {
+  color: var(--grey400);
+}
+
+.button__wrapper .button__secondary:disabled:hover {
+  color: var(--grey400);
 }
 
 .button__wrapper .button__standard:hover {
