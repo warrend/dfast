@@ -1,22 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { json, type LoaderFunction } from '@remix-run/node';
+import React, { useContext, useEffect, useState } from 'react';
+import { json, redirect, type LoaderFunction } from '@remix-run/node';
 import { useActionData, useLoaderData, useTransition } from '@remix-run/react';
 import { FastList, links as fastListLinks } from '~/components/fast-list';
 import { Sidebar, links as sidebarLinks } from '~/components/sidebar';
 import styles from '~/styles/dashboard.css';
 import { allFastNames, allFastTypes } from '~/constants';
 import { objectKeys } from '~/helpers';
-import { createFast } from '~/server/db.server';
+import { createFast, type Fast, type TStatus } from '~/server/db.server';
 
 export const links = () => [
   ...fastListLinks(),
   ...sidebarLinks(),
   { rel: 'stylesheet', href: styles },
 ];
-
-// export const loader: LoaderFunction = async ({ request }) => {
-//   return getCurrentFasts(request);
-// };
 
 function addMinutesToStartDate(min: number, isoDate: string) {
   const date = new Date(Date.parse(isoDate));
@@ -46,7 +42,13 @@ export const action = async ({ request }: { request: Request }) => {
   const date = new Date().toISOString();
   const end = addMinutesToStartDate(Number(duration), date);
 
-  const data = { nameId, typeId, end, status: 'in-progress', start: date };
+  const data = {
+    nameId,
+    typeId,
+    end,
+    status: 'in-progress',
+    start: date,
+  } as Fast;
 
   return await createFast(request, data);
 };

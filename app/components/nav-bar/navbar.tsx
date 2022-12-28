@@ -1,12 +1,11 @@
 import { NavLink, useLoaderData } from '@remix-run/react';
 import { HomeIcon } from '@heroicons/react/24/outline';
 import styles from './styles.css';
-import { type LoaderFunction, type ActionFunction } from '@remix-run/node';
+import { type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
-import { Fast, getCurrentFasts } from '~/server/db.server';
+import { type Fast } from '~/server/db.server';
 import { CircleIcon } from '../circle-icon';
 import { fastNameIcons } from '~/constants';
-import { Modal } from '../modal';
 
 export const links = () => [
   ...countdownLinks(),
@@ -40,24 +39,26 @@ const activeStyle = {
 export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
   return (
     <div className="navbar">
-      <div className="navbar__wrapper">
-        <div className="navbar__inner">
-          <h2>Pages</h2>
+      <div className="navbar__pages">
+        <h2>Pages</h2>
 
-          {navLinks.map(({ link, name, icon }) => (
-            <NavLink
-              key={link}
-              to={link}
-              className="navbar__link"
-              style={({ isActive }) => (isActive ? activeStyle : {})}
-            >
-              <div className="">{icon}</div>
-              <div>{name}</div>
-            </NavLink>
-          ))}
-        </div>
-        <div className="navbar__fast-wrapper">
-          <h2>Current Fasts</h2>
+        {navLinks.map(({ link, name, icon }) => (
+          <NavLink
+            key={link}
+            to={link}
+            className="navbar__link"
+            style={({ isActive }) => (isActive ? activeStyle : {})}
+          >
+            <div className="">{icon}</div>
+            <div>{name}</div>
+          </NavLink>
+        ))}
+      </div>
+      <div style={{ marginLeft: '1rem' }}>
+        <h2>Current Fasts</h2>
+      </div>
+      <div className="navbar__fasts">
+        <div>
           {currentFasts.length ? (
             currentFasts.map(({ end, id, nameId }) => (
               <NavLink key={id} to={`fasts/${id}`}>

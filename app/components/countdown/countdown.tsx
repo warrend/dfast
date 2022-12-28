@@ -58,7 +58,9 @@ export function Countdown({
 
   const renderTickerText =
     timeRemaining <= 0 ? (
-      <div className="countdown__completed">completed!</div>
+      <div className="countdown__completed" style={fontSize}>
+        completed!
+      </div>
     ) : (
       ticker
     );

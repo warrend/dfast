@@ -1,14 +1,14 @@
 .countdown__ticker {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   display: flex;
   color: var(--accent700);
-  /* font-family: 'Copse', serif; */
+  font-family: 'Copse', serif;
 }
 
 .countdown__ticker-section {
   display: grid;
-  grid-template-columns: min-content 0.4em;
+  grid-template-columns: max-content 0.4em;
 }
 
 .countdown__ticker-section > div:first-child {

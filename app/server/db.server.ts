@@ -3,20 +3,19 @@ import type {
   QueryDocumentSnapshot,
 } from 'firebase-admin/firestore';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { getSession } from '~/sessions';
 import { checkSessionCookie, getUserId } from './auth.server';
 import { type allFastNames, type allFastTypes } from '~/constants';
-import { json } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
 
 export type TStatus = 'in-progress' | 'completed';
 
 export type Fast = {
-  id: string;
+  id?: string;
   start: string;
   end: string;
   status: TStatus;
-  typeId: keyof typeof allFastNames;
-  nameId: keyof typeof allFastTypes;
+  typeId: keyof typeof allFastTypes;
+  nameId: keyof typeof allFastNames;
 };
 
 export function assignTypes<T extends object>() {
@@ -39,7 +38,6 @@ export async function getCurrentFasts(request: Request) {
     const user = userSnapshot.data();
 
     const current = user?.current || [];
-    console.log({ current });
 
     return current;
   } catch (error) {
@@ -100,18 +98,17 @@ async function addFastToFastTotals(data: any, uid: string) {
   }
 }
 
-export async function createFast(request: Request, data: any) {
+export async function createFast(request: Request, data: Fast) {
   try {
     const uid = await getUserId(request);
-    const fastsRef = getFirestore()
-      .collection(`users/${uid}/fasts`)
-      .withConverter(assignTypes<Fast>());
+    const fastsRef = getFirestore().collection(`users/${uid}/fasts`);
+    // .withConverter(assignTypes<Fast>());
 
     const createdFast = await fastsRef.add(data);
-    const updatedData = { id: createdFast.id, ...data };
+    const updatedData = { ...data, id: createdFast.id };
     await addFastToCurrentFasts(updatedData, uid!);
 
-    return json({ status: 200 });
+    return redirect(`/dashboard/fasts/${updatedData.id}`);
   } catch (error) {
     return json({ status: 500 });
   }
