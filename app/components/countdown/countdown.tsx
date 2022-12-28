@@ -16,6 +16,7 @@ export function Countdown({
 
   useEffect(() => {
     if (timeRemaining <= 0) {
+      // this is where it needs to add this fast to the completed fasts array. Also need to do it so it can be added even if it's not zero yet.
       return;
     }
 
@@ -26,7 +27,7 @@ export function Countdown({
     return () => clearInterval(intervalId);
   }, [timeRemaining]);
 
-  const days = Math.floor(timeRemaining / 86400);
+  // const days = Math.floor(timeRemaining / 86400);
   const hours = Math.floor(timeRemaining / 3600);
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = Math.floor(timeRemaining % 60);
@@ -35,12 +36,12 @@ export function Countdown({
 
   const ticker = (
     <div className="countdown__ticker" style={fontSize}>
-      {days > 0 && (
+      {/* {days > 0 && (
         <div className="countdown__ticker-section">
           <div>{days.toString().padStart(2, '0')}</div>
           <div>:</div>
         </div>
-      )}
+      )} */}
       <div className="countdown__ticker-section">
         <div>{hours.toString().padStart(2, '0')}</div>
         <div>:</div>

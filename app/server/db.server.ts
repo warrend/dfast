@@ -32,7 +32,6 @@ export function assignTypes<T extends object>() {
 
 export async function getCurrentFasts(request: Request) {
   const uid = await getUserId(request);
-  console.log({ uid });
 
   try {
     const userRef = getFirestore().collection('users').doc(uid!);
@@ -64,11 +63,37 @@ export async function getFasts(request: Request) {
     return json({ status: 500 });
   }
 }
+
 async function addFastToCurrentFasts(data: any, uid: string) {
   try {
     const currentFastsRef = getFirestore().collection('users').doc(uid);
     await currentFastsRef.update({
       current: FieldValue.arrayUnion(data),
+    });
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+
+export async function getFast(request: Request, fastId: string) {
+  const uid = await getUserId(request);
+
+  try {
+    const userRef = getFirestore().collection(`users/${uid}/fasts`);
+    const fastRef = userRef.doc(fastId);
+    const doc = await fastRef.get();
+
+    return doc.data();
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+
+async function addFastToFastTotals(data: any, uid: string) {
+  try {
+    const fastsRef = getFirestore().collection('users').doc(uid);
+    await fastsRef.update({
+      totals: FieldValue.arrayUnion(data),
     });
   } catch (error) {
     return json({ status: 500 });

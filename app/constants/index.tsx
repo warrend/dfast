@@ -62,6 +62,7 @@ export const foodServiceFast = {
 };
 export const generalFast = {
   full: 'Full',
+  socialMedia: 'Social Media',
   tv: 'TV',
   internet: 'Internet',
   phone: 'Phone',
@@ -77,13 +78,13 @@ export const socialFast = {
 };
 
 export const fasts = {
+  general: generalFast,
   social: socialFast,
   communication: communicationFast,
   entertainment: entertainmentFast,
   travel: travelFast,
   food: foodServiceFast,
   gaming: gamingFast,
-  general: generalFast,
 } as const;
 
 export const allFastNames = {
@@ -134,6 +135,7 @@ export const fastNameIcons: TFastNameIcons = {
   internet: <Wifi size={20} className="icon-color" strokeWidth={1.5} />,
   phone: <Smartphone size={20} className="icon-color" strokeWidth={1.5} />,
   gaming: <PuzzlePieceIcon height={20} width={20} className="icon-color" />,
+  socialMedia: <Globe size={20} className="icon-color" strokeWidth={1.5} />,
 };
 
 type TFastType = {

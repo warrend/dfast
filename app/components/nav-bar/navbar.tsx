@@ -6,6 +6,7 @@ import { Countdown, links as countdownLinks } from '../countdown';
 import { Fast, getCurrentFasts } from '~/server/db.server';
 import { CircleIcon } from '../circle-icon';
 import { fastNameIcons } from '~/constants';
+import { Modal } from '../modal';
 
 export const links = () => [
   ...countdownLinks(),
@@ -56,18 +57,24 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
           ))}
         </div>
         <div className="navbar__fast-wrapper">
-          <h2>Fasts</h2>
-          {currentFasts?.map(({ end, id, nameId }) => (
-            <div key={id} className="navbar__current-fast">
-              <div className="navbar__circle-wrapper">
-                <CircleIcon
-                  backgroundColor="var(--accent100)"
-                  icon={fastNameIcons[nameId as keyof typeof fastNameIcons]}
-                />
-              </div>
-              <Countdown fastEndISODate={end} />
-            </div>
-          ))}
+          <h2>Current Fasts</h2>
+          {currentFasts.length ? (
+            currentFasts.map(({ end, id, nameId }) => (
+              <NavLink key={id} to={`fasts/${id}`}>
+                <div className="navbar__current-fast">
+                  <div className="navbar__circle-wrapper">
+                    <CircleIcon
+                      backgroundColor="var(--accent100)"
+                      icon={fastNameIcons[nameId as keyof typeof fastNameIcons]}
+                    />
+                  </div>
+                  <Countdown fastEndISODate={end} />
+                </div>
+              </NavLink>
+            ))
+          ) : (
+            <div className="navbar__no-current-fast">No current fasts.</div>
+          )}
         </div>
       </div>
     </div>

@@ -54,3 +54,6 @@
 .navbar__circle-wrapper {
   margin-right: var(--normal);
 }
+
+.navbar__no-current-fast {
+}

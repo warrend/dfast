@@ -1,0 +1,32 @@
+:root {
+  --modal-width: 100%;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: calc(var(--modal-width) * -1);
+  width: var(--modal-width);
+  height: 100%;
+  padding: var(--large);
+  z-index: 1200;
+  transition: left 125ms;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: var(--shadow100);
+}
+
+.modal--visible {
+  transition: left 125ms;
+  left: 0;
+}
+
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: hsla(0, 0%, 98%, 0.5);
+  z-index: 900;
+}

@@ -4,7 +4,7 @@
 
 .fast-list__group {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 100px);
+  grid-template-columns: repeat(auto-fit, 125px);
   gap: var(--large);
 }
 
@@ -14,12 +14,14 @@
   justify-content: center;
   align-items: center;
   background: white;
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
   box-shadow: var(--shadow100);
   border-radius: var(--tiny);
   border: 2px solid white;
   cursor: pointer;
+  padding: 0 var(--small);
+  text-align: center;
 }
 
 .fast-list__box--selected {
