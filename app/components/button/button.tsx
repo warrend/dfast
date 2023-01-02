@@ -6,7 +6,7 @@ type Props = {
   width: string;
   label: string;
   name: string;
-  disabled: boolean;
+  disabled?: boolean | null;
   id: string;
   type: 'submit' | 'button';
   secondary?: boolean;
@@ -17,16 +17,17 @@ export function Button({
   width = '100%',
   label,
   name,
-  disabled = false,
+  disabled,
   id,
   type = 'button',
   secondary = false,
   onClick,
 }: Props) {
+  const buttonDisabled = disabled || false;
   return (
     <div className="button__wrapper" style={{ width }}>
       <button
-        disabled={disabled}
+        disabled={buttonDisabled}
         id={id}
         name={name}
         type={type}

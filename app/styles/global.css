@@ -1,7 +1,7 @@
 @import url('https://rsms.me/inter/inter.css');
-@import url('https://fonts.googleapis.com/css2?family=Copse&display=swap');
 @import 'normalize.css/normalize.css';
 @import '../styles/theme/index.css';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
 
 * {
   box-sizing: border-box;

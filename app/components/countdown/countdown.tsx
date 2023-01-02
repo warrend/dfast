@@ -1,38 +1,44 @@
+import { useSubmit } from '@remix-run/react';
 import { useState, useEffect } from 'react';
 import styles from './styles.css';
 
 export const links = () => [{ rel: 'stylesheet', href: styles }];
 
 export function Countdown({
-  fastEndISODate,
+  id,
   size,
+  onEnd,
+  secondsRemaining,
 }: {
-  fastEndISODate: string;
-  size?: number;
+  id: string;
+  size?: string;
+  onEnd: (arg: string) => void;
+  secondsRemaining: number;
 }) {
-  const [timeRemaining, setTimeRemaining] = useState(
-    (Date.parse(fastEndISODate) - new Date().getTime()) / 1000
-  );
+  const submit = useSubmit();
+
+  const [timeRemaining, setTimeRemaining] = useState(secondsRemaining);
 
   useEffect(() => {
-    if (timeRemaining <= 0) {
-      // this is where it needs to add this fast to the completed fasts array. Also need to do it so it can be added even if it's not zero yet.
-      return;
-    }
-
     const intervalId = setInterval(() => {
-      setTimeRemaining((prevTimeRemaining) => prevTimeRemaining - 1);
+      if (timeRemaining >= 0) {
+        setTimeRemaining(timeRemaining - 1);
+      } else {
+        onEnd(id);
+
+        clearInterval(intervalId);
+      }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeRemaining]);
+  }, [timeRemaining, submit, id, onEnd]);
 
   // const days = Math.floor(timeRemaining / 86400);
   const hours = Math.floor(timeRemaining / 3600);
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = Math.floor(timeRemaining % 60);
 
-  const fontSize = size ? { fontSize: `${size}px` } : {};
+  const fontSize = size ? { fontSize: size } : {};
 
   const ticker = (
     <div className="countdown__ticker" style={fontSize}>
@@ -57,7 +63,7 @@ export function Countdown({
   );
 
   const renderTickerText =
-    timeRemaining <= 0 ? (
+    timeRemaining < 0 ? (
       <div className="countdown__completed" style={fontSize}>
         completed!
       </div>

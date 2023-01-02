@@ -95,7 +95,7 @@ export function Sidebar({ visible, setVisible, selectedFast }: Props) {
               width="135px"
               label="Start"
               name="click"
-              disabled={fastType === null}
+              disabled={fastType !== '' ? false : true}
               id="form"
               type="submit"
             />
@@ -103,7 +103,6 @@ export function Sidebar({ visible, setVisible, selectedFast }: Props) {
               width="135px"
               label="Cancel"
               name="click"
-              disabled={false}
               id="form"
               type="button"
               secondary

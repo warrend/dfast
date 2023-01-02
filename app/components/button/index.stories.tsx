@@ -16,7 +16,6 @@ Primary.args = {
   width: '125',
   label: 'Login',
   name: 'click',
-  disabled: false,
   id: 'form',
   type: 'button',
 };

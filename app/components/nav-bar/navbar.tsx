@@ -1,5 +1,5 @@
-import { NavLink, useLoaderData } from '@remix-run/react';
-import { HomeIcon } from '@heroicons/react/24/outline';
+import { NavLink, useFetcher } from '@remix-run/react';
+import { HomeIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 import styles from './styles.css';
 import { type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
@@ -22,12 +22,12 @@ const navLinks = [
   {
     name: 'Dashboard',
     link: '/dashboard',
-    icon: <HomeIcon width={20} height={20} />,
+    icon: <HomeIcon width={20} height={20} color="var(--grey600)" />,
   },
   {
-    name: 'Test',
-    link: '/test',
-    icon: <HomeIcon width={20} height={20} />,
+    name: 'Records',
+    link: '/dashboard/records',
+    icon: <BookOpenIcon width={20} height={20} color="var(--grey600)" />,
   },
 ];
 
@@ -37,6 +37,14 @@ const activeStyle = {
 };
 
 export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
+  const fetcher = useFetcher();
+
+  function onFastEnd(id: string) {
+    fetcher.submit(
+      { fastId: id },
+      { method: 'post', action: '/dashboard', replace: true }
+    );
+  }
   return (
     <div className="navbar">
       <div className="navbar__pages">
@@ -48,6 +56,7 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
             to={link}
             className="navbar__link"
             style={({ isActive }) => (isActive ? activeStyle : {})}
+            end
           >
             <div className="">{icon}</div>
             <div>{name}</div>
@@ -60,7 +69,7 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
       <div className="navbar__fasts">
         <div>
           {currentFasts.length ? (
-            currentFasts.map(({ end, id, nameId }) => (
+            currentFasts.map(({ id, nameId, secondsLeft }) => (
               <NavLink key={id} to={`fasts/${id}`}>
                 <div className="navbar__current-fast">
                   <div className="navbar__circle-wrapper">
@@ -69,7 +78,11 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
                       icon={fastNameIcons[nameId as keyof typeof fastNameIcons]}
                     />
                   </div>
-                  <Countdown fastEndISODate={end} />
+                  <Countdown
+                    id={id!}
+                    secondsRemaining={secondsLeft!}
+                    onEnd={onFastEnd}
+                  />
                 </div>
               </NavLink>
             ))
@@ -80,4 +93,9 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
       </div>
     </div>
   );
+}
+
+export function ErrorBoundary({ error }: { error: any }) {
+  console.log({ navError: error });
+  return <div>Error happened</div>;
 }

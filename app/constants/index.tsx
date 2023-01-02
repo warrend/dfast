@@ -146,7 +146,7 @@ type TFastType = {
 };
 
 const micro: TFastType = {
-  micro15: { label: '15m', duration: 15 },
+  micro15: { label: '15m', duration: 1 },
   micro30: { label: '30m', duration: 30 },
   micro45: { label: '45m', duration: 45 },
 };

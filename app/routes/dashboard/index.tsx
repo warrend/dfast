@@ -6,7 +6,12 @@ import { Sidebar, links as sidebarLinks } from '~/components/sidebar';
 import styles from '~/styles/dashboard.css';
 import { allFastNames, allFastTypes } from '~/constants';
 import { objectKeys } from '~/helpers';
-import { createFast, type Fast, type TStatus } from '~/server/db.server';
+import {
+  createFast,
+  getCurrentFasts,
+  type Fast,
+  type TStatus,
+} from '~/server/db.server';
 
 export const links = () => [
   ...fastListLinks(),
@@ -19,6 +24,10 @@ function addMinutesToStartDate(min: number, isoDate: string) {
   date.setMinutes(date.getMinutes() + min);
   return date.toISOString();
 }
+
+export const loader: LoaderFunction = async ({ request }) => {
+  return await getCurrentFasts(request);
+};
 
 export const action = async ({ request }: { request: Request }) => {
   const form = await request.formData();
@@ -71,6 +80,7 @@ export default function Dashboard() {
 
   const actionData = useActionData<typeof action>();
   const transition = useTransition();
+  const currentFasts = useLoaderData();
 
   return (
     <FastContext.Provider value={{ actionData, transition }}>
@@ -80,6 +90,7 @@ export default function Dashboard() {
           <FastList
             selectedFast={selectedFast}
             setSelectedFast={setSelectedFast}
+            currentFasts={currentFasts}
           />
         </div>
 

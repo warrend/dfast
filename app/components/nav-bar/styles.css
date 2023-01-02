@@ -28,7 +28,7 @@
 }
 
 .navbar__link:hover {
-  border-color: var(--primary500);
+  border-color: var(--primary300);
 }
 
 .navbar__link {

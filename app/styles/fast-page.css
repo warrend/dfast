@@ -4,3 +4,11 @@
   display: grid;
   place-content: center;
 }
+
+.fast-page__go-back-button {
+  padding: var(--medium);
+  position: absolute;
+  top: var(--small);
+  left: var(--small);
+  cursor: pointer;
+}

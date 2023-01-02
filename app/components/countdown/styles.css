@@ -3,7 +3,8 @@
   font-weight: 600;
   display: flex;
   color: var(--accent700);
-  font-family: 'Copse', serif;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1;
 }
 
 .countdown__ticker-section {
