@@ -4,7 +4,7 @@ import type {
 } from 'firebase-admin/firestore';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { checkSessionCookie, getUserId } from './auth.server';
-import { type allFastNames, type allFastTypes } from '~/constants';
+import { allFastTypes, type allFastNames } from '~/constants';
 import { json, redirect } from '@remix-run/node';
 import { objectEntries } from '~/helpers';
 
@@ -124,7 +124,13 @@ export async function createFast(request: Request, data: Fast) {
   }
 }
 
-export async function removeFromCurrentFasts(request: Request, fastId: string) {
+export async function removeFromCurrentFasts(
+  request: Request,
+  fastId: string,
+  nameId: string,
+  typeId: string
+) {
+  console.log({ fastId, nameId, typeId });
   try {
     const uid = await getUserId(request);
 
@@ -137,7 +143,8 @@ export async function removeFromCurrentFasts(request: Request, fastId: string) {
       [`current.${fastId}`]: FieldValue.delete(),
     });
 
-    return await completeFast(uid, fastId);
+    await completeFast(uid, fastId);
+    return await updateRecord(uid, nameId, allFastTypes[typeId].duration);
   } catch (error) {
     return json({ status: 500 });
   }
@@ -149,6 +156,22 @@ export async function completeFast(uid: string, fastId: string) {
     const fastRef = userRef.collection('fasts').doc(fastId);
     return await fastRef.update({
       status: 'completed',
+    });
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+
+export async function updateRecord(
+  uid: string,
+  nameId: string,
+  duration: number
+) {
+  try {
+    const currentFastsRef = getFirestore().collection('users').doc(uid);
+    return await currentFastsRef.update({
+      [`records.${nameId}.minutes`]: FieldValue.increment(duration),
+      [`records.${nameId}.total`]: FieldValue.increment(1),
     });
   } catch (error) {
     return json({ status: 500 });

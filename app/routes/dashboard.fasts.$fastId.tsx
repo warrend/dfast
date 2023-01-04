@@ -15,7 +15,7 @@ import {
 } from '@remix-run/react';
 import { Countdown, links as countdownLinks } from '~/components/countdown';
 import styles from '~/styles/fast-page.css';
-import { allFastNames } from '~/constants';
+import { allFastNames, allFastTypes } from '~/constants';
 import { Button, links as buttonLinks } from '~/components/button';
 import { ArrowLeft } from 'react-feather';
 import { RefAttributes, useEffect, useRef } from 'react';
@@ -44,29 +44,19 @@ export const loader: LoaderFunction = async ({
     (Date.parse(data?.end) - new Date().getTime()) / 1000
   );
 
-  return { ...data, secondsLeft: secondsLeft < 0 ? 0 : secondsLeft };
+  return { ...data, secondsLeft: secondsLeft < 0 ? 0 : secondsLeft } as Fast;
 };
-
-// export const action: ActionFunction = async ({ request }) => {
-//   const form = await request.formData();
-//   const fastId = form.get('fastId') as string;
-
-//   if (!fastId) {
-//     return json({ status: 422 });
-//   }
-
-//   const res = await removeFromCurrentFasts(request, fastId);
-//   console.log({ res });
-//   return res;
-// };
 
 export default function FastPage() {
   const fast = useLoaderData<Fast>();
   const fetcher = useFetcher();
 
-  function handleOnEnd(id: string) {
+  function handleOnEnd(id: string, nameId: string, typeId: string) {
     if (fast.end >= fast.start) {
-      fetcher.submit({ fastId: id }, { method: 'post', action: '/dashboard' });
+      fetcher.submit(
+        { fastId: id, typeId, nameId },
+        { method: 'post', action: '/dashboard' }
+      );
     }
   }
 
@@ -83,7 +73,9 @@ export default function FastPage() {
           id={fast.id}
           size="12vw"
           onEnd={handleOnEnd}
+          nameId={fast.nameId}
           secondsRemaining={fast.secondsLeft}
+          typeId={fast.typeId as string}
         />
         {/* <Button
           width="135px"

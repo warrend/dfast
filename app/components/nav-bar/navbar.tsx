@@ -5,7 +5,7 @@ import { type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
 import { type Fast } from '~/server/db.server';
 import { CircleIcon } from '../circle-icon';
-import { fastNameIcons } from '~/constants';
+import { allFastTypes, fastNameIcons } from '~/constants';
 
 export const links = () => [
   ...countdownLinks(),
@@ -39,9 +39,13 @@ const activeStyle = {
 export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
   const fetcher = useFetcher();
 
-  function onFastEnd(id: string) {
+  function onFastEnd(
+    id: string,
+    nameId: string,
+    typeId: keyof typeof allFastTypes
+  ) {
     fetcher.submit(
-      { fastId: id },
+      { fastId: id, nameId, typeId: typeId as string },
       { method: 'post', action: '/dashboard', replace: true }
     );
   }
@@ -69,7 +73,7 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
       <div className="navbar__fasts">
         <div>
           {currentFasts.length ? (
-            currentFasts.map(({ id, nameId, secondsLeft }) => (
+            currentFasts.map(({ id, nameId, secondsLeft, typeId }) => (
               <NavLink key={id} to={`fasts/${id}`}>
                 <div className="navbar__current-fast">
                   <div className="navbar__circle-wrapper">
@@ -82,6 +86,8 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
                     id={id!}
                     secondsRemaining={secondsLeft!}
                     onEnd={onFastEnd}
+                    nameId={nameId}
+                    typeId={typeId as string}
                   />
                 </div>
               </NavLink>

@@ -20,12 +20,14 @@ export const links = () => [
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const fastId = form.get('fastId') as string;
+  const nameId = form.get('nameId') as string;
+  const typeId = form.get('typeId') as string;
 
   if (!fastId) {
     return json({ status: 422 });
   }
 
-  const res = await removeFromCurrentFasts(request, fastId);
+  const res = await removeFromCurrentFasts(request, fastId, nameId, typeId);
   console.log({ res });
   return res;
 };
@@ -41,7 +43,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
       return { ...fast, secondsLeft };
     })
-    .reverse();
+    .reverse() as Fast[];
 };
 
 export const CurrentFastContext = createContext({});

@@ -1,5 +1,6 @@
 import { useSubmit } from '@remix-run/react';
 import { useState, useEffect } from 'react';
+import { allFastTypes } from '~/constants';
 import styles from './styles.css';
 
 export const links = () => [{ rel: 'stylesheet', href: styles }];
@@ -9,11 +10,15 @@ export function Countdown({
   size,
   onEnd,
   secondsRemaining,
+  nameId,
+  typeId,
 }: {
   id: string;
   size?: string;
-  onEnd: (arg: string) => void;
+  onEnd: (id: string, nameId: string, typeId: string) => void;
   secondsRemaining: number;
+  nameId: string;
+  typeId: string;
 }) {
   const submit = useSubmit();
 
@@ -24,14 +29,14 @@ export function Countdown({
       if (timeRemaining >= 0) {
         setTimeRemaining(timeRemaining - 1);
       } else {
-        onEnd(id);
+        onEnd(id, nameId, typeId);
 
         clearInterval(intervalId);
       }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeRemaining, submit, id, onEnd]);
+  }, [timeRemaining, submit, id, onEnd, nameId, typeId]);
 
   // const days = Math.floor(timeRemaining / 86400);
   const hours = Math.floor(timeRemaining / 3600);
