@@ -12,6 +12,7 @@ import {
   type Fast,
   type TStatus,
 } from '~/server/db.server';
+import { requireAuth } from '~/server/auth.server';
 
 export const links = () => [
   ...fastListLinks(),
@@ -26,7 +27,8 @@ function addMinutesToStartDate(min: number, isoDate: string) {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return await getCurrentFasts(request);
+  const user = await requireAuth(request);
+  return await getCurrentFasts(user.uid);
 };
 
 export const action = async ({ request }: { request: Request }) => {

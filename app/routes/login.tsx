@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     'Set-Cookie': await commitSession(session),
   };
   if (uid) {
-    return redirect('/', { headers });
+    return redirect('/dashboard', { headers });
   }
   const { apiKey, domain } = getRestConfig();
   return json<LoaderData>({ apiKey, domain }, { headers });
@@ -37,6 +37,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 interface ActionData {
   error?: string;
 }
+
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const idToken = form.get('idToken');

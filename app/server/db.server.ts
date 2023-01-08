@@ -37,9 +37,7 @@ export function assignTypes<T extends object>() {
   };
 }
 
-export async function getCurrentFasts(request: Request) {
-  const uid = await getUserId(request);
-
+export async function getCurrentFasts(uid: string) {
   try {
     const userRef = getFirestore().collection('users').doc(uid!);
     const userSnapshot = await userRef.get();
@@ -47,6 +45,18 @@ export async function getCurrentFasts(request: Request) {
 
     const current = user?.current || {};
     return objectEntries(current).map(([_, item]) => item);
+  } catch (error) {
+    return json({ status: 500 });
+  }
+}
+
+export async function getRecords(uid: string) {
+  try {
+    const userRef = getFirestore().collection('users').doc(uid!);
+    const userSnapshot = await userRef.get();
+    const user = userSnapshot.data();
+
+    return user?.records || {};
   } catch (error) {
     return json({ status: 500 });
   }
@@ -124,13 +134,30 @@ export async function createFast(request: Request, data: Fast) {
   }
 }
 
+export async function removeFast(request: Request, docId: string) {
+  try {
+    const uid = await getUserId(request);
+    if (!uid) {
+      return json({ status: 422 });
+    }
+
+    const userRef = getFirestore().collection('users').doc(uid);
+    await userRef.collection('fasts').doc(docId).delete();
+
+    return await userRef.update({
+      [`current.${docId}`]: FieldValue.delete(),
+    });
+  } catch (error) {
+    return;
+  }
+}
+
 export async function removeFromCurrentFasts(
   request: Request,
   fastId: string,
   nameId: string,
   typeId: string
 ) {
-  console.log({ fastId, nameId, typeId });
   try {
     const uid = await getUserId(request);
 

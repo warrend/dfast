@@ -12,6 +12,7 @@ export function Countdown({
   secondsRemaining,
   nameId,
   typeId,
+  status,
 }: {
   id: string;
   size?: string;
@@ -19,24 +20,25 @@ export function Countdown({
   secondsRemaining: number;
   nameId: string;
   typeId: string;
+  status: string;
 }) {
   const submit = useSubmit();
 
   const [timeRemaining, setTimeRemaining] = useState(secondsRemaining);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (timeRemaining >= 0) {
-        setTimeRemaining(timeRemaining - 1);
-      } else {
-        onEnd(id, nameId, typeId);
-
-        clearInterval(intervalId);
+    const timer = setInterval(() => {
+      if (status === 'in-progress') {
+        if (timeRemaining === 0) {
+          clearInterval(timer);
+          onEnd(id, nameId, typeId);
+        } else {
+          setTimeRemaining(timeRemaining - 1);
+        }
       }
     }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [timeRemaining, submit, id, onEnd, nameId, typeId]);
+    return () => clearInterval(timer);
+  }, [timeRemaining, submit, id, onEnd, nameId, typeId, status]);
 
   // const days = Math.floor(timeRemaining / 86400);
   const hours = Math.floor(timeRemaining / 3600);

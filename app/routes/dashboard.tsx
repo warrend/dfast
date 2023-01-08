@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from 'react';
 import { Header, links as headerLinks } from '~/components/header';
 import { Modal } from '~/components/modal';
 import { Navbar, links as navbarLinks } from '~/components/nav-bar';
+import { requireAuth } from '~/server/auth.server';
 import {
   Fast,
   getCurrentFasts,
@@ -28,12 +29,12 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const res = await removeFromCurrentFasts(request, fastId, nameId, typeId);
-  console.log({ res });
   return res;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const fasts = (await getCurrentFasts(request)) as Fast[];
+  const user = await requireAuth(request);
+  const fasts = (await getCurrentFasts(user.uid)) as Fast[];
 
   return fasts
     .map((fast) => {

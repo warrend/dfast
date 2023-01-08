@@ -5,7 +5,7 @@
   --icon-color: hsl(213, 42%, 5%);
   --overlay-color: hsla(213, 50%, 50%, 0.075);
 
-  --primary-base-hue: 210;
+  --primary-base-hue: 213;
   --accent-base-hue: 185;
   --grey-base-hue: 213;
   --error-base-hue: 0;
@@ -21,16 +21,16 @@
   --grey800: hsl(var(--grey-base-hue), 15%, 34%);
   --grey900: hsl(var(--grey-base-hue), 15%, 28%);
 
-  --primary50: hsl(var(--primary-base-hue), 97%, 98%);
-  --primary100: hsl(var(--primary-base-hue), 97%, 92%);
-  --primary200: hsl(var(--primary-base-hue), 90%, 86%);
-  --primary300: hsl(var(--primary-base-hue), 90%, 72%);
-  --primary400: hsl(var(--primary-base-hue), 90%, 61%);
-  --primary500: hsl(var(--primary-base-hue), 90%, 50%);
-  --primary600: hsl(var(--primary-base-hue), 90%, 42%);
-  --primary700: hsl(var(--primary-base-hue), 90%, 31%);
-  --primary800: hsl(var(--primary-base-hue), 90%, 21%);
-  --primary900: hsl(var(--primary-base-hue), 90%, 15%);
+  --primary50: hsl(var(--primary-base-hue), 96%, 98%);
+  --primary100: hsl(var(--primary-base-hue), 94%, 92%);
+  --primary200: hsl(var(--primary-base-hue), 80%, 86%);
+  --primary300: hsl(var(--primary-base-hue), 70%, 72%);
+  --primary400: hsl(var(--primary-base-hue), 60%, 61%);
+  --primary500: hsl(var(--primary-base-hue), 60%, 55%);
+  --primary600: hsl(var(--primary-base-hue), 60%, 42%);
+  --primary700: hsl(var(--primary-base-hue), 60%, 31%);
+  --primary800: hsl(var(--primary-base-hue), 60%, 21%);
+  --primary900: hsl(var(--primary-base-hue), 60%, 15%);
 
   --accent100: hsl(var(--accent-base-hue), 70%, 95%);
   --accent200: hsl(var(--accent-base-hue), 60%, 82%);

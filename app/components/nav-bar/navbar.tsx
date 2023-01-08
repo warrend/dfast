@@ -5,7 +5,7 @@ import { type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
 import { type Fast } from '~/server/db.server';
 import { CircleIcon } from '../circle-icon';
-import { allFastTypes, fastNameIcons } from '~/constants';
+import { type allFastTypes, fastNameIcons } from '~/constants';
 
 export const links = () => [
   ...countdownLinks(),
@@ -26,7 +26,12 @@ const navLinks = [
   },
   {
     name: 'Records',
-    link: '/dashboard/records',
+    link: 'records',
+    icon: <BookOpenIcon width={20} height={20} color="var(--grey600)" />,
+  },
+  {
+    name: 'Logout',
+    link: 'logout',
     icon: <BookOpenIcon width={20} height={20} color="var(--grey600)" />,
   },
 ];
@@ -73,7 +78,7 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
       <div className="navbar__fasts">
         <div>
           {currentFasts.length ? (
-            currentFasts.map(({ id, nameId, secondsLeft, typeId }) => (
+            currentFasts.map(({ id, nameId, secondsLeft, typeId, status }) => (
               <NavLink key={id} to={`fasts/${id}`}>
                 <div className="navbar__current-fast">
                   <div className="navbar__circle-wrapper">
@@ -88,6 +93,7 @@ export function Navbar({ currentFasts }: { currentFasts: Fast[] }) {
                     onEnd={onFastEnd}
                     nameId={nameId}
                     typeId={typeId as string}
+                    status={status}
                   />
                 </div>
               </NavLink>
