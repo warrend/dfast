@@ -3,6 +3,7 @@
   width: 100vw;
   display: grid;
   place-content: center;
+  background: var(--primary500);
 }
 
 .fast-page__go-back-button {
@@ -11,4 +12,14 @@
   top: var(--small);
   left: var(--small);
   cursor: pointer;
+}
+
+.fast-page__fast-name-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.fast-page__fast-name {
+  margin-left: var(--small);
+  font-weight: 600;
 }

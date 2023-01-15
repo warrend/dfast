@@ -1,10 +1,12 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import {
+  Form,
   Link,
   useActionData,
   useLoaderData,
   useSubmit,
+  useTransition,
 } from '@remix-run/react';
 import { useCallback, useState } from 'react';
 
@@ -16,11 +18,22 @@ import {
 } from '~/server/auth.server';
 import { commitSession, getSession } from '~/sessions';
 import { getRestConfig } from '~/server/firebase.server';
+import { Input, links as inputLinks } from '~/components/input';
+import { Button, links as buttonLinks } from '~/components/button';
+import styles from '~/styles/login-page.css';
+import { objectKeys } from '~/helpers';
 
 interface LoaderData {
   apiKey: string;
   domain: string;
 }
+
+export const links = () => [
+  ...inputLinks(),
+  ...buttonLinks(),
+  { rel: 'stylesheet', href: styles },
+];
+
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getSession(request.headers.get('cookie'));
   const { uid } = await checkSessionCookie(session);
@@ -38,89 +51,94 @@ interface ActionData {
   error?: string;
 }
 
+type Error = {
+  email?: string;
+  password?: string;
+};
+
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  const idToken = form.get('idToken');
-  let sessionCookie;
+  const email = form.get('email') as string;
+  const password = form.get('password') as string;
+
+  const error: Error = {};
+
+  if (email === '') {
+    error.email = 'Must include email';
+  }
+
+  if (password === '') {
+    error.password = 'Must include password';
+  }
+
+  if (objectKeys(error).length > 0) {
+    return json({ status: 401, error: error });
+  }
+
   try {
-    if (typeof idToken === 'string') {
-      sessionCookie = await signInWithToken(idToken);
-    } else {
-      const email = form.get('email');
-      const password = form.get('password');
-      const formError = json(
-        { error: 'Please fill all fields!' },
-        { status: 400 }
-      );
-      if (typeof email !== 'string') return formError;
-      if (typeof password !== 'string') return formError;
-      sessionCookie = await signIn(email, password);
-    }
-    const session = await getSession(request.headers.get('cookie'));
-    session.set('session', sessionCookie);
-    return redirect('/dashboard', {
-      headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    });
+    return await signIn(request, email, password);
   } catch (error) {
-    console.error(error);
-    return json<ActionData>({ error: String(error) }, { status: 401 });
+    return json({ status: 401, error });
   }
 };
 
 export default function Login() {
-  const [clientAction, setClientAction] = useState<ActionData>();
-  const action = useActionData<ActionData>();
-  const restConfig = useLoaderData<LoaderData>();
-  const submit = useSubmit();
+  const action = useActionData();
+  const transition = useTransition();
 
-  const handleSubmit = useCallback(
-    async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      // To avoid rate limiting, we sign in client side if we can.
-      const login = await firebaseRest.signInWithPassword(
-        {
-          email: event.currentTarget.email.value,
-          password: event.currentTarget.password.value,
-          returnSecureToken: true,
-        },
-        restConfig
-      );
-      if (firebaseRest.isError(login)) {
-        setClientAction({ error: login.error.message });
-        return;
-      }
-      submit({ idToken: login.idToken }, { method: 'post' });
-    },
-    [submit, restConfig]
-  );
+  const state: 'idle' | 'success' | 'error' | 'submitting' =
+    transition.submission
+      ? 'submitting'
+      : action?.subscription
+      ? 'success'
+      : action?.error
+      ? 'error'
+      : 'idle';
+
+  console.log({ action, transition });
+
   return (
-    <div>
-      <h1>Login</h1>
-      {(clientAction?.error || action?.error) && (
-        <p>{clientAction?.error || action?.error}</p>
-      )}
-      <form method="post" onSubmit={handleSubmit}>
-        <input
-          style={{ display: 'block' }}
-          name="email"
-          placeholder="you@example.com"
-          type="email"
-        />
-        <input
-          style={{ display: 'block' }}
-          name="password"
-          placeholder="password"
-          type="password"
-        />
-        <button style={{ display: 'block' }} type="submit">
-          Login
-        </button>
-      </form>
-      <p>
-        Do you want to <Link to="/join">join</Link>?
-      </p>
+    <div className="login-page">
+      <div className="login-page__content-wrapper">
+        <div className="login-page__logo-wrapper">LOGO</div>
+        {action?.error && action.error.name && <div>There was a problem</div>}
+        <div className="login-page__content">
+          <Form method="post" id="login-form">
+            <Input
+              name="email"
+              placeholder="you@example.com"
+              type="email"
+              label="Email"
+              width="100%"
+              error={action?.error && action?.error.email}
+            />
+            <Input
+              name="password"
+              placeholder="password"
+              type="password"
+              label="Password"
+              width="100%"
+              error={action?.error && action?.error.password}
+            />
+            <div className="login-page__button-wrapper">
+              <Button
+                id="login-form"
+                type="submit"
+                label={state === 'submitting' ? 'Loading' : 'Login'}
+                width="100px"
+                name="login"
+                disabled={state === 'submitting'}
+              />
+            </div>
+          </Form>
+          <div className="login-page__signup-wrapper">
+            Don't have an account?{' '}
+            <Link style={{ color: 'var(--primary500)' }} to="/signup">
+              Sign up here.
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,33 +1,32 @@
 import {
-  ActionFunction,
-  FormData,
+  type ActionFunction,
   json,
   type LoaderFunction,
+  redirect,
 } from '@remix-run/node';
-import {
-  Fast,
-  getFast,
-  removeFast,
-  removeFromCurrentFasts,
-} from '~/server/db.server';
+import { type Fast, getFast, removeFast } from '~/server/db.server';
 import {
   type Params,
   useLoaderData,
   NavLink,
   Form,
-  useSubmit,
   useFetcher,
   useActionData,
 } from '@remix-run/react';
 import { Countdown, links as countdownLinks } from '~/components/countdown';
 import styles from '~/styles/fast-page.css';
-import { allFastNames, allFastTypes } from '~/constants';
+import { allFastNames, allFastTypes, fastNameIcons } from '~/constants';
 import { Button, links as buttonLinks } from '~/components/button';
 import { ArrowLeft } from 'react-feather';
 import { RefAttributes, useEffect, useRef, useTransition } from 'react';
 import { requireAuth } from '~/server/auth.server';
+import {
+  CircleIcon,
+  links as circleIconsLinks,
+} from '~/components/circle-icon';
 
 export const links = () => [
+  ...circleIconsLinks(),
   ...buttonLinks(),
   ...countdownLinks(),
   { rel: 'stylesheet', href: styles },
@@ -44,7 +43,7 @@ export const loader: LoaderFunction = async ({
 
   const docId = params.fastId;
   if (!docId) {
-    return json({ status: 404, message: 'Page not found' });
+    throw new Error('Fast ID does not exist.');
   }
   const data = (await getFast(request, docId)) as Fast;
 
@@ -70,7 +69,8 @@ export const action: ActionFunction = async ({
   }
 
   try {
-    return await removeFast(request, docId);
+    await removeFast(request, docId);
+    return redirect('/dashboard');
   } catch (error) {
     return json({ status: 400 });
   }
@@ -108,7 +108,15 @@ export default function FastPage() {
         </div>
       </NavLink>
       <div className="fast-page__countdown">
-        <div>{allFastNames[fast.nameId as keyof typeof allFastNames]} Fast</div>
+        <div className="fast-page__fast-name-wrapper">
+          <CircleIcon
+            icon={fastNameIcons[fast.nameId]}
+            backgroundColor={'var(--primary300)'}
+          />
+          <div className="fast-page__fast-name">
+            {allFastNames[fast.nameId as keyof typeof allFastNames]} Fast
+          </div>
+        </div>
         <Countdown
           id={fast.id}
           size="12vw"
@@ -117,6 +125,7 @@ export default function FastPage() {
           secondsRemaining={fast.secondsLeft}
           typeId={fast.typeId as string}
           status={fast.status}
+          color="#222"
         />
         <Form method="post">
           <input type="hidden" defaultValue={fast.id} />
@@ -127,7 +136,6 @@ export default function FastPage() {
             disabled={false}
             id="form"
             type="submit"
-            secondary
           />
         </Form>
       </div>
@@ -136,6 +144,5 @@ export default function FastPage() {
 }
 
 export function ErrorBoundary({ error }: { error: any }) {
-  console.log({ errorDashPage: error });
-  return <div>Error happened</div>;
+  return <div>{error.message}</div>;
 }

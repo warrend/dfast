@@ -1,5 +1,9 @@
 import { NavLink, useFetcher } from '@remix-run/react';
-import { HomeIcon, BookOpenIcon } from '@heroicons/react/24/outline';
+import {
+  HomeIcon,
+  ChartBarIcon,
+  ArrowRightOnRectangleIcon,
+} from '@heroicons/react/24/outline';
 import styles from './styles.css';
 import { type ActionFunction } from '@remix-run/node';
 import { Countdown, links as countdownLinks } from '../countdown';
@@ -27,12 +31,18 @@ const navLinks = [
   {
     name: 'Records',
     link: 'records',
-    icon: <BookOpenIcon width={20} height={20} color="var(--grey600)" />,
+    icon: <ChartBarIcon width={20} height={20} color="var(--grey600)" />,
   },
   {
     name: 'Logout',
     link: 'logout',
-    icon: <BookOpenIcon width={20} height={20} color="var(--grey600)" />,
+    icon: (
+      <ArrowRightOnRectangleIcon
+        width={20}
+        height={20}
+        color="var(--grey600)"
+      />
+    ),
   },
 ];
 

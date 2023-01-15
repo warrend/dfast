@@ -13,6 +13,7 @@ export function Countdown({
   nameId,
   typeId,
   status,
+  color = 'var(--accent600)',
 }: {
   id: string;
   size?: string;
@@ -21,6 +22,7 @@ export function Countdown({
   nameId: string;
   typeId: string;
   status: string;
+  color?: string;
 }) {
   const submit = useSubmit();
 
@@ -78,5 +80,9 @@ export function Countdown({
       ticker
     );
 
-  return <div className="countdown">{renderTickerText}</div>;
+  return (
+    <div className="countdown" style={{ color }}>
+      {renderTickerText}
+    </div>
+  );
 }

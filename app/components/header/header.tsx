@@ -8,9 +8,7 @@ export function Header() {
     <header className="header">
       <div className="header__wrapper">
         <div className="header__logo">LUD</div>
-        <div className="header__nav">
-          <User size={20} />
-        </div>
+        <div className="header__nav">{/* <User size={20} /> */}</div>
       </div>
     </header>
   );

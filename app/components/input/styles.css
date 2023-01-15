@@ -1,5 +1,6 @@
 .input {
-  margin-bottom: var(--large);
+  margin-bottom: calc(var(--jumbo) + var(--tiny));
+  position: relative;
 }
 
 .input input,
@@ -42,5 +43,13 @@
 .input input::placeholder,
 .input textarea::placeholder {
   color: var(--grey900);
+  font-size: var(--font-small);
+}
+
+.input__error-message {
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+  color: var(--error400);
   font-size: var(--font-small);
 }
