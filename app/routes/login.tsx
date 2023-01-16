@@ -8,7 +8,8 @@ import {
   useSubmit,
   useTransition,
 } from '@remix-run/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 import * as firebaseRest from '~/firebase-rest';
 import {
@@ -22,6 +23,7 @@ import { Input, links as inputLinks } from '~/components/input';
 import { Button, links as buttonLinks } from '~/components/button';
 import styles from '~/styles/login-page.css';
 import { objectKeys } from '~/helpers';
+import { setErrorMessage } from '~/server/messages.server';
 
 interface LoaderData {
   apiKey: string;
@@ -57,6 +59,7 @@ type Error = {
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  const session = await getSession(request.headers.get('cookie'));
   const form = await request.formData();
   const email = form.get('email') as string;
   const password = form.get('password') as string;
@@ -78,6 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
   try {
     return await signIn(request, email, password);
   } catch (error) {
+    session.flash('error', 'Invalid username/password');
     return json({ status: 401, error });
   }
 };
@@ -97,11 +101,16 @@ export default function Login() {
 
   console.log({ action, transition });
 
+  useEffect(() => {
+    if (action?.error?.code) {
+      toast.error('Error with login info.');
+    }
+  }, [action]);
+
   return (
     <div className="login-page">
       <div className="login-page__content-wrapper">
         <div className="login-page__logo-wrapper">LOGO</div>
-        {action?.error && action.error.name && <div>There was a problem</div>}
         <div className="login-page__content">
           <Form method="post" id="login-form">
             <Input
@@ -139,6 +148,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
