@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { Form, Link, useActionData } from '@remix-run/react';
 
-import { checkSessionCookie, signUp } from '~/server/auth.server';
+import { checkSessionCookie } from '~/server/auth.server';
 import { commitSession, getSession } from '~/sessions';
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (typeof email !== 'string') return formError;
   if (typeof password !== 'string') return formError;
   try {
-    const sessionCookie = await signUp(name, email, password);
+    // const sessionCookie = await signUp(name, email, password);
     const session = await getSession(request.headers.get('cookie'));
     session.set('session', sessionCookie);
     return redirect('/dashboard', {
@@ -45,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export default function Login() {
+export default function Signup() {
   const action = useActionData<ActionData>();
   return (
     <div>

@@ -8,7 +8,7 @@ if (!sessionSecret) {
 export const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
     cookie: {
-      name: '__session',
+      name: 'lud__session',
       secrets: [sessionSecret],
       maxAge: 60 * 60 * 24 * 7, // 1 week
       sameSite: 'lax',

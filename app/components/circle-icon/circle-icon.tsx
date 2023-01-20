@@ -4,7 +4,7 @@ export const links = () => [{ rel: 'stylesheet', href: styles }];
 
 export function CircleIcon({
   icon,
-  backgroundColor = 'var(--primary50)',
+  backgroundColor = 'var(--primary500)',
 }: {
   icon: React.ReactNode;
   backgroundColor: string;

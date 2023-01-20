@@ -64,7 +64,7 @@ export function FastList({
                   <div className="fast-list__icon">
                     <CircleIcon
                       icon={fastNameIcons[k]}
-                      backgroundColor="var(--primary100)"
+                      backgroundColor="var(--primary200)"
                     />
                   </div>
                   <div className="fast-list__name">{v}</div>
