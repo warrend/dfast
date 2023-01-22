@@ -7,7 +7,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const user = await requireAuth(request);
   const records = await getRecords(user.uid);
 
-  console.log({ records });
   return records;
 };
 

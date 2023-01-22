@@ -4,12 +4,21 @@ import {
   Form,
   Link,
   useActionData,
+  useFetcher,
   useLoaderData,
   useSubmit,
   useTransition,
 } from '@remix-run/react';
 import { useCallback, useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  signOut,
+  getAuth,
+} from 'firebase/auth';
 
 import * as firebaseRest from '~/firebase-rest';
 import {
@@ -24,6 +33,7 @@ import { Button, links as buttonLinks } from '~/components/button';
 import styles from '~/styles/login-page.css';
 import { objectKeys } from '~/helpers';
 import { setErrorMessage } from '~/server/messages.server';
+import { auth } from '~/firebase';
 
 interface LoaderData {
   apiKey: string;
@@ -37,16 +47,17 @@ export const links = () => [
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('cookie'));
-  const { uid } = await checkSessionCookie(session);
-  const headers = {
-    'Set-Cookie': await commitSession(session),
-  };
-  if (uid) {
-    return redirect('/dashboard', { headers });
-  }
-  const { apiKey, domain } = getRestConfig();
-  return json<LoaderData>({ apiKey, domain }, { headers });
+  // const session = await getSession(request.headers.get('cookie'));
+  // const uid = await checkSessionCookie(session);
+  return [];
+  // const headers = {
+  //   'Set-Cookie': await commitSession(session),
+  // };
+  // if (uid) {
+  //   return redirect('/dashboard', { headers });
+  // }
+  // const { apiKey, domain } = getRestConfig();
+  // return json<LoaderData>({ apiKey, domain }, { headers });
 };
 
 interface ActionData {
@@ -59,36 +70,28 @@ type Error = {
 };
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get('cookie'));
-  const form = await request.formData();
-  const email = form.get('email') as string;
-  const password = form.get('password') as string;
-
-  const error: Error = {};
-
-  if (email === '') {
-    error.email = 'Must include email';
-  }
-
-  if (password === '') {
-    error.password = 'Must include password';
-  }
-
-  if (objectKeys(error).length > 0) {
-    return json({ status: 401, error: error });
-  }
+  let formData = await request.formData();
 
   try {
-    return await signIn(request, email, password);
+    const sessionCookie = await signInWithToken(
+      formData.get('idToken') as string
+    );
+    const session = await getSession(request.headers.get('cookie'));
+    session.set('session', sessionCookie);
+    return redirect('/dashboard', {
+      headers: {
+        'Set-Cookie': await commitSession(session),
+      },
+    });
   } catch (error) {
-    session.flash('error', 'Invalid username/password');
-    return json({ status: 401, error });
+    return { error: { message: error } };
   }
 };
 
 export default function Login() {
   const action = useActionData();
   const transition = useTransition();
+  const fetcher = useFetcher();
 
   const state: 'idle' | 'success' | 'error' | 'submitting' =
     transition.submission
@@ -100,6 +103,18 @@ export default function Login() {
       : 'idle';
 
   console.log({ action, transition });
+
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(async (res) => {
+        const idToken = await res.user.getIdToken();
+        fetcher.submit({ idToken: idToken }, { method: 'post' });
+      })
+      .catch((err) => {
+        console.log('signInWithGoogle', err);
+      });
+  };
 
   useEffect(() => {
     if (action?.error?.code) {
@@ -139,6 +154,15 @@ export default function Login() {
                 disabled={state === 'submitting'}
               />
             </div>
+            <Button
+              id="login-form"
+              type="submit"
+              label={state === 'submitting' ? 'Loading' : 'Login with Google'}
+              width="150px"
+              name="google-auth"
+              disabled={state === 'submitting'}
+              onClick={() => signInWithGoogle()}
+            />
           </Form>
           <div className="login-page__signup-wrapper">
             Don't have an account?{' '}

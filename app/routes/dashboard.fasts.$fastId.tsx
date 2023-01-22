@@ -19,11 +19,11 @@ import { allFastNames, allFastTypes, fastNameIcons } from '~/constants';
 import { Button, links as buttonLinks } from '~/components/button';
 import { ArrowLeft } from 'react-feather';
 import { RefAttributes, useEffect, useRef, useTransition } from 'react';
-import { requireAuth } from '~/server/auth.server';
 import {
   CircleIcon,
   links as circleIconsLinks,
 } from '~/components/circle-icon';
+import { requireAuth } from '~/server/auth.server';
 
 export const links = () => [
   ...circleIconsLinks(),
@@ -127,15 +127,17 @@ export default function FastPage() {
           status={fast.status}
           color="#222"
         />
-        <Form method="post">
+        <Form method="post" style={{ marginTop: 'var(--large)' }}>
           <input type="hidden" defaultValue={fast.id} />
           <Button
             width="135px"
-            label="Cancel"
+            label="CANCEL"
+            secondary
             name="click"
             disabled={false}
             id="form"
             type="submit"
+            color="var(--accent300)"
           />
         </Form>
       </div>

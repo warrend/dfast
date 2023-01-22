@@ -11,6 +11,7 @@ type Props = {
   type: 'submit' | 'button';
   secondary?: boolean;
   onClick?: () => void;
+  color?: string;
 };
 
 export function Button({
@@ -22,6 +23,7 @@ export function Button({
   type = 'button',
   secondary = false,
   onClick,
+  color,
 }: Props) {
   const buttonDisabled = disabled || false;
   return (
@@ -33,6 +35,7 @@ export function Button({
         type={type}
         className={`button__${secondary ? 'secondary' : 'standard'} `}
         onClick={onClick}
+        style={{ color }}
       >
         {label}
       </button>

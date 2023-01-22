@@ -81,10 +81,14 @@ export async function getFasts(request: Request) {
 
 async function addFastToCurrentFasts(data: any, uid: string) {
   try {
+    console.log({ data, uid });
     const currentFastsRef = getFirestore().collection('users').doc(uid);
-    return await currentFastsRef.update({
-      current: { [data.id]: data },
-    });
+    return await currentFastsRef.set(
+      {
+        current: { [data.id]: data },
+      },
+      { merge: true }
+    );
   } catch (error) {
     return json({ status: 500 });
   }
@@ -109,9 +113,12 @@ export async function getFast(request: Request, fastId: string) {
 async function addFastToFastTotals(data: any, uid: string) {
   try {
     const fastsRef = getFirestore().collection('users').doc(uid);
-    await fastsRef.update({
-      totals: FieldValue.arrayUnion(data),
-    });
+    await fastsRef.set(
+      {
+        totals: FieldValue.arrayUnion(data),
+      },
+      { merge: true }
+    );
   } catch (error) {
     return json({ status: 500 });
   }

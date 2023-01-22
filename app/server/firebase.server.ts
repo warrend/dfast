@@ -5,18 +5,7 @@ import {
   applicationDefault,
 } from 'firebase-admin/app';
 import { getAuth as getServerAuth } from 'firebase-admin/auth';
-import { initializeApp } from 'firebase/app';
 import * as firebaseRest from '../firebase-rest';
-
-const firebaseConfig = {
-  apiKey: process.env.FB_API_KEY,
-  authDomain: process.env.FB_AUTH_DOMAIN,
-  projectId: process.env.FB_PROJECT_ID,
-  storageBucket: process.env.FB_STORAGE_BUCKET,
-  messagingSenderId: process.env.FB_MESSAGE_SENDER_ID,
-  appId: process.env.FB_APP_ID,
-  measurementId: process.env.FB_MEASUREMENT_ID,
-};
 
 // Warning: though getRestConfig is only run server side, its return value may be sent to the client
 export const getRestConfig = (): {
@@ -66,7 +55,6 @@ if (getServerApps().length === 0) {
       throw Error('Invalid SERVICE_ACCOUNT environment variable');
     }
   }
-  initializeApp(firebaseConfig);
   initializeServerApp(config);
 }
 

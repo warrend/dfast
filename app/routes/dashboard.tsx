@@ -10,6 +10,7 @@ import {
   getCurrentFasts,
   removeFromCurrentFasts,
 } from '~/server/db.server';
+import { getSession } from '~/sessions';
 import styles from '~/styles/dashboard.css';
 
 export const links = () => [

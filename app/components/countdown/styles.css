@@ -9,6 +9,12 @@
 .countdown__ticker-section {
   display: grid;
   grid-template-columns: max-content 0.4em;
+  text-align: center;
+  align-self: center;
+}
+
+.countdown__ticker-section:last-child {
+  grid-template-columns: max-content;
 }
 
 .countdown__ticker-section > div:first-child {
