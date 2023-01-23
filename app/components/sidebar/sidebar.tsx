@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
-import { json } from '@remix-run/node';
-import { Form, useTransition, useActionData } from '@remix-run/react';
+import { Form } from '@remix-run/react';
 import {
   fastTypes,
   fastTypeLabels,
-  type allFastNames,
+  allFastNames,
   type allFastTypes,
 } from '~/constants';
 import { objectEntries } from '~/helpers';
@@ -43,10 +42,14 @@ export function Sidebar({ visible, setVisible, selectedFast }: Props) {
     setDuration(mins);
   }
 
+  function handleCancel() {
+    setFastType(null);
+    setVisible(null);
+  }
+
   return (
     <>
       <div className={`sidebar ${visible && 'sidebar--visible'}`}>
-        <h2>Select Fast Group</h2>
         <Form method="post" id="form" action="/dashboard?index">
           <input type="hidden" name="fastType" defaultValue={fastType || ''} />
           <input
@@ -55,6 +58,30 @@ export function Sidebar({ visible, setVisible, selectedFast }: Props) {
             defaultValue={selectedFast || ''}
           />
           <input type="hidden" name="duration" defaultValue={duration || ''} />
+
+          <div className="sidebar__header">
+            <h1>{selectedFast && allFastNames[selectedFast]} Fast</h1>
+            <div className="sidebar__button-row">
+              <Button
+                width="100px"
+                label="Start"
+                name="click"
+                disabled={fastType === null}
+                id="form"
+                type="submit"
+              />
+              <Button
+                width="100px"
+                label="Cancel"
+                name="click"
+                id="form"
+                type="button"
+                secondary
+                onClick={() => handleCancel()}
+              />
+            </div>
+          </div>
+          <h2>Select Fast Group</h2>
 
           <div className="sidebar__fast-group-chip-wrapper">
             {objectEntries(fastTypes).map(([fastType, value]) => (
@@ -82,32 +109,13 @@ export function Sidebar({ visible, setVisible, selectedFast }: Props) {
                   onClick={() => handleSetFast(k, v.duration)}
                   style={{
                     background:
-                      fastType === k ? 'var(--accent200)' : 'var(--grey100)',
+                      fastType === k ? 'var(--accent200)' : 'var(--grey200)',
                   }}
                 >
                   {v.label}
                 </div>
               ))}
             </div>
-          </div>
-          <div className="sidebar__button-row">
-            <Button
-              width="135px"
-              label="Start"
-              name="click"
-              disabled={fastType !== '' ? false : true}
-              id="form"
-              type="submit"
-            />
-            <Button
-              width="135px"
-              label="Cancel"
-              name="click"
-              id="form"
-              type="button"
-              secondary
-              onClick={() => setVisible(null)}
-            />
           </div>
         </Form>
       </div>

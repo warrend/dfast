@@ -37,6 +37,16 @@ input[type='checkbox'] {
   accent-color: var(--primary600);
 }
 
+h1 {
+  font-weight: 600;
+  font-size: var(--font-medium);
+  letter-spacing: 1px;
+  color: var(--grey900);
+  margin-top: 0;
+  margin-bottom: var(--normal);
+  font-variant: small-caps;
+}
+
 h2 {
   font-weight: 600;
   font-size: var(--font-small);

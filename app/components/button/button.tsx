@@ -26,6 +26,7 @@ export function Button({
   color,
 }: Props) {
   const buttonDisabled = disabled || false;
+  console.log({ buttonDisabled });
   return (
     <div className="button__wrapper" style={{ width }}>
       <button

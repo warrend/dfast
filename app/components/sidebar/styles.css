@@ -16,13 +16,21 @@
   box-shadow: var(--shadow100);
 }
 
+.sidebar__header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--grey200);
+  padding-bottom: var(--large);
+  margin-bottom: var(--large);
+}
+
 .sidebar__overlay {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: hsla(0, 0%, 98%, 0.5);
+  background: hsla(0, 0%, 0%, 0.5);
   z-index: 900;
 }
 
@@ -39,7 +47,7 @@
   font-weight: 500;
   justify-content: center;
   align-items: center;
-  border-radius: var(--small);
+  border-radius: var(--tiny);
   margin-right: var(--small);
   margin-bottom: var(--small);
   box-shadow: var(--shadow100);
@@ -68,7 +76,7 @@
   font-weight: 500;
   justify-content: center;
   align-items: center;
-  border-radius: var(--small);
+  border-radius: var(--tiny);
 }
 
 .sidebar__button-row {
